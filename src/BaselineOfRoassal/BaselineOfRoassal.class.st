@@ -16,6 +16,7 @@ BaselineOfRoassal >> baseline: spec [
 	spec for: #'pharo9.x' do: [ self baselineForPharo9: spec ].
 	spec for: #'pharo10.x' do: [ self baselineForPharo10: spec ].
 	spec for: #'pharo11.x' do: [ self baselineForPharo11: spec ].
+	spec for: #'pharo12.x' do: [ self baselineForPharo11: spec ].
 	spec for: #'common' do: [ self baselineForCommon: spec ].
 ]
 
