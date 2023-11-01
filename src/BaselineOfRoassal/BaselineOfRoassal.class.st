@@ -109,9 +109,9 @@ BaselineOfRoassal >> dependencies: spec [
 	spec baseline: 'Bloc' with: [
 		spec repository: 'github://pharo-graphics/Bloc:dev-1.0/src' ].
 	spec baseline: 'AthensSVG' with: [
-		spec repository: 'github://pharo-contributions/Athens-SVG/src' ].
+		spec repository: 'github://bauing-schmidt/Athens-SVG:production12/src' ].
 	spec package: 'Athens-SVG-PathConverter' with: [
-		spec repository: 'github://pharo-contributions/Athens-SVG/src'].
+		spec repository: 'github://bauing-schmidt/Athens-SVG:production12/src'].
 	spec baseline: 'Geometry' with: [ 
 		spec repository: 'github://pharo-contributions/Geometry/src' ].
 	spec baseline: 'NumericScales'with: [ 
