@@ -1,21 +1,23 @@
 Class {
-	#name : #RSSelectionInCanvasInteraction,
-	#superclass : #RSAbstractControlCanvasInteraction,
+	#name : 'RSSelectionInCanvasInteraction',
+	#superclass : 'RSAbstractControlCanvasInteraction',
 	#instVars : [
 		'elastic',
 		'shadowInteraction',
 		'withoutNilModels'
 	],
-	#category : #'Roassal-Interaction-Controls'
+	#category : 'Roassal-Interaction-Controls',
+	#package : 'Roassal-Interaction',
+	#tag : 'Controls'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSSelectionInCanvasInteraction class >> example1 [
 
 	^ (self canvasExample @ self) open
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSSelectionInCanvasInteraction class >> example2 [
 
 	| interaction |
@@ -24,7 +26,7 @@ RSSelectionInCanvasInteraction class >> example2 [
 	^ (self canvasExample @ interaction) open
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSSelectionInCanvasInteraction class >> withoutNilModels [
 
 	^ self new
@@ -32,21 +34,21 @@ RSSelectionInCanvasInteraction class >> withoutNilModels [
 		  yourself
 ]
 
-{ #category : #interactions }
+{ #category : 'interactions' }
 RSSelectionInCanvasInteraction >> addInteractionToShape: aShape [
 
-	((aShape hasInteraction: self class) or: [ aShape isLine ]) ifTrue: [ 
+	((aShape hasInteraction: self class) or: [ aShape isLine ]) ifTrue: [
 		^ self ].
 	aShape when: RSMouseLeftClick send: #processClick: to: self
 ]
 
-{ #category : #interactions }
+{ #category : 'interactions' }
 RSSelectionInCanvasInteraction >> addInteractionToShapes: aCanvas [
 
 	aCanvas nodes do: [ :shape | self addInteractionToShape: shape ]
 ]
 
-{ #category : #interactions }
+{ #category : 'interactions' }
 RSSelectionInCanvasInteraction >> addInteractionsToCanvas: aCanvas [
 
 	aCanvas
@@ -59,12 +61,12 @@ RSSelectionInCanvasInteraction >> addInteractionsToCanvas: aCanvas [
 		when: RSKeyDown send: #processKeyDown: to: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSelectionInCanvasInteraction >> elasticBoxInteraction [
 	^ elastic
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSSelectionInCanvasInteraction >> initialize [
 
 	super initialize.
@@ -78,13 +80,13 @@ RSSelectionInCanvasInteraction >> initialize [
 		when: RSSelectionEndEvent send: #selectionEnd: to: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSelectionInCanvasInteraction >> keyToSelect [
 
 	^ 'A'
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSSelectionInCanvasInteraction >> onShape: aCanvas [
 
 	aCanvas selectionInteraction: self.
@@ -98,7 +100,7 @@ RSSelectionInCanvasInteraction >> onShape: aCanvas [
 		for: self
 ]
 
-{ #category : #'event processing' }
+{ #category : 'event processing' }
 RSSelectionInCanvasInteraction >> processClick: evt [
 
 	| shape canvas selectedShapes |
@@ -113,35 +115,35 @@ RSSelectionInCanvasInteraction >> processClick: evt [
 	canvas signalUpdate
 ]
 
-{ #category : #'event processing' }
+{ #category : 'event processing' }
 RSSelectionInCanvasInteraction >> processKeyDown: evt [
 
 	| canvas |
-	((evt commandKeyPressed or: [ evt controlKeyPressed ]) and: [ 
+	((evt commandKeyPressed or: [ evt controlKeyPressed ]) and: [
 		 evt keyName = self keyToSelect ]) ifFalse: [ ^ self ].
 	canvas := evt canvas.
 	canvas setSelectedShapes: canvas nodes.
 	canvas signalUpdate
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSSelectionInCanvasInteraction >> renderLegendOn: lb [
 	lb text: 'Shift + Left click' description: 'Drag the mouse to select shapes'
 ]
 
-{ #category : #'event processing' }
+{ #category : 'event processing' }
 RSSelectionInCanvasInteraction >> selectionChange: evt [
 	self setSelectedShapes: evt selectedShapes on: evt canvas
 ]
 
-{ #category : #'event processing' }
+{ #category : 'event processing' }
 RSSelectionInCanvasInteraction >> selectionEnd: evt [
 
 	evt canvas selectedShapes: evt selectedShapes.
 	evt canvas announce: evt
 ]
 
-{ #category : #'event processing' }
+{ #category : 'event processing' }
 RSSelectionInCanvasInteraction >> selectionStart: evt [
 	| canvas |
 	canvas := evt canvas.
@@ -150,18 +152,18 @@ RSSelectionInCanvasInteraction >> selectionStart: evt [
 	canvas announce: evt
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSSelectionInCanvasInteraction >> setSelectedShapes: aGroupOfShapes on: aRSCanvas [
 
 	| filteredShapes selectedShapes shapesToRemoveShadow shapesToPutShadow |
 	filteredShapes := self withoutNilModels
-		                  ifTrue: [ 
-		                  aGroupOfShapes select: [ :shape | 
+		                  ifTrue: [
+		                  aGroupOfShapes select: [ :shape |
 			                  shape model isNotNil ] ]
 		                  ifFalse: [ aGroupOfShapes ].
-		
+
 	selectedShapes := aRSCanvas selectedShapes.
-	
+
 	shapesToRemoveShadow := selectedShapes difference: filteredShapes.
 	self unselectShapes: shapesToRemoveShadow in: aRSCanvas.
 
@@ -175,18 +177,18 @@ RSSelectionInCanvasInteraction >> setSelectedShapes: aGroupOfShapes on: aRSCanva
 	aRSCanvas signalUpdate
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSelectionInCanvasInteraction >> shadowColor [
 
 	^ shadowInteraction shadowColor
 ]
 
-{ #category : #accessing }
-RSSelectionInCanvasInteraction >> shadowColor: aColor [ 
+{ #category : 'accessing' }
+RSSelectionInCanvasInteraction >> shadowColor: aColor [
 	shadowInteraction shadowColor: aColor
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSSelectionInCanvasInteraction >> unselectShapes: aGroupOfShapes in: aCanvas [
 
 	| key |
@@ -198,14 +200,14 @@ RSSelectionInCanvasInteraction >> unselectShapes: aGroupOfShapes in: aCanvas [
 		aGroupOfShapes do: [ :s | list remove: s ifAbsent: [  ] ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSelectionInCanvasInteraction >> withoutNilModels [
 
 	^ withoutNilModels
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSelectionInCanvasInteraction >> withoutNilModels: aBoolean [
 
-	withoutNilModels := aBoolean 
+	withoutNilModels := aBoolean
 ]

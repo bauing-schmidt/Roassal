@@ -5,8 +5,8 @@ this interaction works with an announcer. with this events `RSSelectionChangedEv
 
 "
 Class {
-	#name : #RSElasticBoxInteraction,
-	#superclass : #RSAbstractControlCanvasInteraction,
+	#name : 'RSElasticBoxInteraction',
+	#superclass : 'RSAbstractControlCanvasInteraction',
 	#traits : 'RSTAnnounceable',
 	#classTraits : 'RSTAnnounceable classTrait',
 	#instVars : [
@@ -19,25 +19,27 @@ Class {
 		'cameraDelta',
 		'shouldProcessInteraction'
 	],
-	#category : #'Roassal-Interaction-ElasticBox'
+	#category : 'Roassal-Interaction-ElasticBox',
+	#package : 'Roassal-Interaction',
+	#tag : 'ElasticBox'
 }
 
-{ #category : #announcer }
+{ #category : 'announcer' }
 RSElasticBoxInteraction >> announcementClasses [
 	^ RSSelectionEvent subclasses
 ]
 
-{ #category : #announcer }
+{ #category : 'announcer' }
 RSElasticBoxInteraction >> announcer: anAnnouncer [
 	announcer := anAnnouncer
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSElasticBoxInteraction >> box [
 	^ baseBox
 ]
 
-{ #category : #'event processing' }
+{ #category : 'event processing' }
 RSElasticBoxInteraction >> boxEnded: event [
 	| boxEvent |
 	boxEvent := self createEvent: RSSelectionEndEvent with: event.
@@ -48,13 +50,13 @@ RSElasticBoxInteraction >> boxEnded: event [
 	event signalUpdate
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSElasticBoxInteraction >> boxStartEvent [
 	"return the activation box start event"
 	^ self events second
 ]
 
-{ #category : #'event processing' }
+{ #category : 'event processing' }
 RSElasticBoxInteraction >> boxStarted: event [
 	| boxEvent |
 	boxEvent := self createEvent: RSSelectionStartEvent with: event.
@@ -63,7 +65,7 @@ RSElasticBoxInteraction >> boxStarted: event [
 	self announce: boxEvent
 ]
 
-{ #category : #'event processing' }
+{ #category : 'event processing' }
 RSElasticBoxInteraction >> boxUpdated: event [
 	| boxEvent newSelectedShapes |
 	boxEvent := self createEvent: RSSelectionChangedEvent with: event.
@@ -80,7 +82,7 @@ RSElasticBoxInteraction >> boxUpdated: event [
 	event signalUpdate
 ]
 
-{ #category : #'event processing' }
+{ #category : 'event processing' }
 RSElasticBoxInteraction >> cameraMin: min max: max value: value [
 
 	(value between: min and: max) ifTrue: [ ^ 0 ].
@@ -88,7 +90,7 @@ RSElasticBoxInteraction >> cameraMin: min max: max value: value [
 	^ value - max
 ]
 
-{ #category : #'event processing' }
+{ #category : 'event processing' }
 RSElasticBoxInteraction >> computeCameraDelta: event [
 
 	| padding visibleRect position x y |
@@ -112,18 +114,18 @@ RSElasticBoxInteraction >> computeCameraDelta: event [
 	cameraDelta := x @ y * -1
 ]
 
-{ #category : #'event processing' }
+{ #category : 'event processing' }
 RSElasticBoxInteraction >> createCameraAnimation: event [
 
 	| canvas animation position correct |
 	canvas := event canvas.
 	cameraDelta := 0 asPoint.
-	(canvas hasProperty: self class) ifTrue: [ 
+	(canvas hasProperty: self class) ifTrue: [
 		(canvas propertyAt: self class) stop ].
 	animation := canvas newAnimation.
 	animation
 		repeat;
-		onStepDo: [ 
+		onStepDo: [
 			canvas camera translateBy: cameraDelta.
 			position := canvas camera position.
 			correct := self correctCamera: canvas camera.
@@ -131,7 +133,7 @@ RSElasticBoxInteraction >> createCameraAnimation: event [
 			canvas signalUpdate ]
 ]
 
-{ #category : #helper }
+{ #category : 'helper' }
 RSElasticBoxInteraction >> createElasticBox: event [
 	| canvas elasticBox |
 	canvas := event canvas.
@@ -140,7 +142,7 @@ RSElasticBoxInteraction >> createElasticBox: event [
 	^ elasticBox
 ]
 
-{ #category : #helper }
+{ #category : 'helper' }
 RSElasticBoxInteraction >> createEvent: clazzEvent with: originalEvent [
 	^ clazzEvent new
 		canvas: originalEvent canvas;
@@ -148,7 +150,7 @@ RSElasticBoxInteraction >> createEvent: clazzEvent with: originalEvent [
 		yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSElasticBoxInteraction >> defaultBox [
 	| color |
 	color := Color colorFrom: '3399FF'.
@@ -158,43 +160,43 @@ RSElasticBoxInteraction >> defaultBox [
 		yourself
 ]
 
-{ #category : #helper }
+{ #category : 'helper' }
 RSElasticBoxInteraction >> getOrCreateElasticBox: event [
 	^ event canvas
 		propertyAt: self className
 		ifAbsentPut: [ self createElasticBox: event ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSElasticBoxInteraction >> initialize [
 	super initialize.
 	baseBox := self defaultBox.
 	self useNegativeBox.
 	self targetShapes: #nodes.
 	shouldProcessInteraction := false.
-	selectedShapes := #().
+	selectedShapes := #()
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSElasticBoxInteraction >> noNegativeBox [
 	shouldUseNegativeBox := false
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSElasticBoxInteraction >> onShape: aCanvas [
-	
+
 	aCanvas
 		when: RSMouseLeftDragStart send: #processDragStart: to: self;
 		when: RSMouseDragging send: #processDragging: to: self;
 		when: RSMouseDragEnd send: #processDragEnd: to: self
 ]
 
-{ #category : #announcer }
+{ #category : 'announcer' }
 RSElasticBoxInteraction >> privateAnnouncer [
 	^ announcer
 ]
 
-{ #category : #'event processing' }
+{ #category : 'event processing' }
 RSElasticBoxInteraction >> processDragEnd: event [
 	shouldProcessInteraction ifFalse: [ ^ self ].
 	shouldProcessInteraction := false.
@@ -202,7 +204,7 @@ RSElasticBoxInteraction >> processDragEnd: event [
 	self stopCameraAnimation: event
 ]
 
-{ #category : #'event processing' }
+{ #category : 'event processing' }
 RSElasticBoxInteraction >> processDragStart: event [
 	shouldProcessInteraction := event shiftKeyPressed.
 	shouldProcessInteraction ifFalse: [ ^ self ].
@@ -210,25 +212,24 @@ RSElasticBoxInteraction >> processDragStart: event [
 	self createCameraAnimation: event
 ]
 
-{ #category : #'event processing' }
+{ #category : 'event processing' }
 RSElasticBoxInteraction >> processDragging: event [
 	shouldProcessInteraction ifFalse: [ ^ self ].
 	self computeCameraDelta: event.
 	self boxUpdated: event
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSElasticBoxInteraction >> renderLegendOn: anRSLegend [
-	
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSElasticBoxInteraction >> selectedShapes [
 	"return the current selected shapes"
 	^ selectedShapes
 ]
 
-{ #category : #helper }
+{ #category : 'helper' }
 RSElasticBoxInteraction >> selectedShapesWith: shape [
 
 	| rect |
@@ -238,26 +239,26 @@ RSElasticBoxInteraction >> selectedShapesWith: shape [
 		  node ~= shape and: [ node encompassingRectangle intersects: rect ] ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSElasticBoxInteraction >> shouldUseNegativeBox [
 	^ shouldUseNegativeBox
 ]
 
-{ #category : #'event processing' }
+{ #category : 'event processing' }
 RSElasticBoxInteraction >> stopCameraAnimation: event [
 
-	event canvas propertyAt: self class ifPresent: [ :animation | 
+	event canvas propertyAt: self class ifPresent: [ :animation |
 		animation stop.
 		event canvas removeKey: self class ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSElasticBoxInteraction >> targetShapes [
 	"Return the targetShapes, usually a collection where the elasticbox with intersets its encompassing rectangle"
 	^ targetShapes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSElasticBoxInteraction >> targetShapes: anObject [
 	"
 	Expermode related to read documentation of `rsValue:`
@@ -275,7 +276,7 @@ RSElasticBoxInteraction >> targetShapes: anObject [
 	targetShapes := anObject
 ]
 
-{ #category : #helper }
+{ #category : 'helper' }
 RSElasticBoxInteraction >> updateBoxRectangle: shape with: event [
 	| corner |
 	corner := event position.
@@ -285,7 +286,7 @@ RSElasticBoxInteraction >> updateBoxRectangle: shape with: event [
 	shape fromRectangle: 	(startPosition corner: corner)
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSElasticBoxInteraction >> useNegativeBox [
 	shouldUseNegativeBox := true
 ]

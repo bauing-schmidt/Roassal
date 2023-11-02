@@ -3,12 +3,14 @@ This class is used to customize the render collection of roassal
 check RSAbstractRenderCollection
 "
 Class {
-	#name : #RSRenderTreeExamples,
-	#superclass : #RSAbstractExamples,
-	#category : #'Roassal-Examples-Basic'
+	#name : 'RSRenderTreeExamples',
+	#superclass : 'RSAbstractExamples',
+	#category : 'Roassal-Examples-Basic',
+	#package : 'Roassal-Examples',
+	#tag : 'Basic'
 }
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSRenderTreeExamples >> example01BigVisualization131k [
 	<script: 'self new example01BigVisualization131k open
 		setLabel: ''131K'' '>
@@ -16,7 +18,7 @@ RSRenderTreeExamples >> example01BigVisualization131k [
 	"(2 raisedTo: 17) = 131072 = 131K"
 	| c b1 b2 |
 	c := RSCanvas new.
-	c aaNone.
+	c host aaNone.
 	b2 := nil.
 	1 to: (2 raisedTo: 17) do: [ :i |
 		b1 := b2.
@@ -33,14 +35,14 @@ RSRenderTreeExamples >> example01BigVisualization131k [
 	^ c
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSRenderTreeExamples >> example02BigVisualizationHalfMillion [
 	<script: 'self new example02BigVisualizationHalfMillion open'>
 	<noTest>
 	"(2 raisedTo: 19) = 524288 = 0.52 Million"
 	| c b1 b2 |
 	c := RSCanvas new.
-	c aaNone.
+	c host aaNone.
 	b2 := nil.
 	1 to: (2 raisedTo: 19) do: [ :i |
 		b1 := b2.
@@ -50,20 +52,20 @@ RSRenderTreeExamples >> example02BigVisualizationHalfMillion [
 		b2 @ RSDraggable.
 		c add: b2.
 	].
-	c shapeCollection: RSBulkLoadRTreeCollection new.
-	
+	c shapeCollection: RTBulkLoadRTreeCollection new.
+
 	c @ RSCanvasController simple.
 	c nodes @ RSPopup.
 	c nodes @ RSHighlightable red.
 	^ c
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSRenderTreeExamples >> example03RTree [
 	<script: 'self new example03RTree inspect'>
 	<noTest>
 	| tree random canvas |
-	tree := RSRTreeShapeCollection new.
+	tree := RTreeCollection new.
 	random := Random new.
 	random seed: 777.
 	canvas := RSCanvas new.

@@ -2,29 +2,31 @@
 I have basic examples for RSChart and some of their decorators
 "
 Class {
-	#name : #RSChartExample,
-	#superclass : #RSAbstractExamples,
-	#category : #'Roassal-Chart-Examples'
+	#name : 'RSChartExample',
+	#superclass : 'RSAbstractExamples',
+	#category : 'Roassal-Chart-Examples',
+	#package : 'Roassal-Chart-Examples'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSChartExample >> example01Markers [
 	<script: 'self new example01Markers open'>
 	| x p |
 	x := -3.14 to: 3.14 by: 0.01.
 	p := RSLinePlot new.
 	p x: x y: x sin * 0.22 + 0.5.
-	p verticalTick asFloat.
+	
 	p addDecoration: RSYMarkerDecoration new average.
 	p addDecoration: RSYMarkerDecoration new min.
 	p addDecoration: RSYMarkerDecoration new max.
 	p addDecoration: RSXMarkerDecoration new max.
 	p addDecoration: RSXMarkerDecoration new min.
 	p addDecoration: (RSXMarkerDecoration new value: 0).
+	p verticalTick asFloat.
 	^ p
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSChartExample >> example02ScatterPlot [
 	<script: 'self new example02ScatterPlot show'>
 
@@ -38,7 +40,7 @@ RSChartExample >> example02ScatterPlot [
 	^ p
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSChartExample >> example03Plot [
 	<script: 'self new example03Plot show'>
 
@@ -60,7 +62,7 @@ RSChartExample >> example03Plot [
 	^ plt
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSChartExample >> example04WithTick [
 	<script: 'self new example04WithTick show'>
 	| x chart |
@@ -74,7 +76,7 @@ RSChartExample >> example04WithTick [
 	^ chart
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSChartExample >> example05WithTick [
 	<script: 'self new example05WithTick show'>
 	| x c |
@@ -88,7 +90,7 @@ RSChartExample >> example05WithTick [
 	^ c
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSChartExample >> example06CustomNumberOfTicks [
 	<script: 'self new example06CustomNumberOfTicks show'>
 	| x chart |
@@ -105,7 +107,7 @@ RSChartExample >> example06CustomNumberOfTicks [
 	^ chart
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSChartExample >> example07AdjustingFontSize [
 
 	<script: 'self new example07AdjustingFontSize open'>
@@ -127,7 +129,7 @@ RSChartExample >> example07AdjustingFontSize [
 	^ c
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSChartExample >> example08TwoCharts [
 	<script: 'self new example08TwoCharts open'>
 	| c c1 c2 |
@@ -151,7 +153,7 @@ RSChartExample >> example08TwoCharts [
 	^ c
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSChartExample >> example09LinearSqrtSymlog [
 	<script: 'self new example09LinearSqrtSymlog open'>
 	| c x y |
@@ -171,7 +173,7 @@ RSChartExample >> example09LinearSqrtSymlog [
 	^ c
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSChartExample >> example10BarPlot [
 	<script: 'self new example10BarPlot open'>
 	| p x y |
@@ -191,7 +193,7 @@ RSChartExample >> example10BarPlot [
 	^ p
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSChartExample >> example11BarplotCombinedWithLine [
 	<script: 'self new example11BarplotCombinedWithLine open'>
 	| c x y |
@@ -210,7 +212,7 @@ RSChartExample >> example11BarplotCombinedWithLine [
 	^ c
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSChartExample >> example12ScatterPlotAndNormalizer [
 
 	<script: 'self new example12ScatterPlotAndNormalizer open'>
@@ -242,7 +244,7 @@ RSChartExample >> example12ScatterPlotAndNormalizer [
 	^ p canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSChartExample >> example19PositiveNetagiveBarPlots [
 	<script: 'self new example19PositiveNetagiveBarPlots open'>
 	| c d d2 |
@@ -267,7 +269,7 @@ RSChartExample >> example19PositiveNetagiveBarPlots [
 	^ c
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSChartExample >> example20Grid [
 	<script: 'self new example20Grid open'>
 	| c x y vertical horizontal |
@@ -284,7 +286,7 @@ RSChartExample >> example20Grid [
 	^ c canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSChartExample >> example21Popup [
 	<script: 'self new example21Popup open'>
 	| x cumsum c  y error popup |
@@ -323,7 +325,7 @@ RSChartExample >> example21Popup [
 	^ c canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSChartExample >> example22CustomPopup [
 	<script: 'self new example22CustomPopup open'>
 	| values names x y popup c value date group |
@@ -398,7 +400,7 @@ RSChartExample >> example22CustomPopup [
 	^ c
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSChartExample >> example23PopupInScatterPlot [
 	<script: 'self new example23PopupInScatterPlot open'>
 	| chart plot data classes  |
@@ -415,7 +417,7 @@ RSChartExample >> example23PopupInScatterPlot [
 	^ chart
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSChartExample >> example24SpineLine [
 
 	<script: 'self new example24SpineLine open'>
@@ -430,7 +432,7 @@ RSChartExample >> example24SpineLine [
 	^ c
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSChartExample >> example25CustomBackground [
 	<script: 'self new example25CustomBackground open'>
 	| plot c scale color form paint |
@@ -446,7 +448,7 @@ RSChartExample >> example25CustomBackground [
 			e position: x @ y * 10.
 			e size: (scale scale: y).
 			e color: color.
-			c add: e 
+			c add: e
 		]
 	].
 	c zoomToFit.
@@ -457,20 +459,20 @@ RSChartExample >> example25CustomBackground [
 	^ plot
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSChartExample >> example26DensityPlot [
 	<script: 'self new example26DensityPlot open'>
 	| prod data paint densityPlot points linePlot plot |
 	prod := [:a | Array new: a value withAll: a key ].
-	data :=(prod value: 1.5->7), (prod value: 2.5->2), 
-		(prod value: 3.5->8), (prod value: 4.5->3), 
+	data :=(prod value: 1.5->7), (prod value: 2.5->2),
+		(prod value: 3.5->8), (prod value: 4.5->3),
 		(prod value: 5.5->1), (prod value: 6.5->10).
 
 	paint := LinearGradientPaint fromArray: { 0-> '#050321'. 1-> '#435562'}.
 	paint start: 25@ 50; stop: 0@ -50.
 	densityPlot := RSDensityPlot data: data.
 	densityPlot masterShape paint: paint.
-		
+
 	densityPlot bandwidth: 0.5.
 	points := densityPlot curvePoints.
 	linePlot := RSLinePlot points: points.
@@ -488,7 +490,7 @@ RSChartExample >> example26DensityPlot [
 	plot styler: (RSChartStyler new
 		tickColor: Color white;
 		spineColor: Color white;
-		textColor: Color white).	
+		textColor: Color white).
 
 	plot container newAnimation
 		repeat;
@@ -497,12 +499,11 @@ RSChartExample >> example26DensityPlot [
 		onStepDo: [ :t |
 			linePlot line dashArray: { t. 1000 }.
 			 ];
-		when: RSAnimationStartEvent do: [:evt | 
+		when: RSAnimationStartEvent do: [:evt |
 			linePlot line color: (linePlot line color = Color red
 				ifTrue: [Color green]
 				ifFalse: [Color red])
 			] for: plot.
-		
-	^ plot
 
+	^ plot
 ]

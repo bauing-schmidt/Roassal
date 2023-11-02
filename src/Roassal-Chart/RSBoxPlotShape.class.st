@@ -29,8 +29,8 @@ boxPlotShape := RSBoxPlotShape data: data.
 ```
 "
 Class {
-	#name : #RSBoxPlotShape,
-	#superclass : #RSAbstractBandPlotShape,
+	#name : 'RSBoxPlotShape',
+	#superclass : 'RSAbstractBandPlotShape',
 	#instVars : [
 		'statisticalMeasures',
 		'box',
@@ -45,10 +45,12 @@ Class {
 		'notched',
 		'notchWidthPercentage'
 	],
-	#category : #'Roassal-Chart-Plots'
+	#category : 'Roassal-Chart-Plots',
+	#package : 'Roassal-Chart',
+	#tag : 'Plots'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBoxPlotShape class >> data: collectionOfData1D [
 	| boxGraph |
 	boxGraph := self new.
@@ -56,98 +58,97 @@ RSBoxPlotShape class >> data: collectionOfData1D [
 	^ boxGraph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBoxPlotShape class >> data: collectionOfData1D scales: collectionOfNSScales [
 	| boxGraph |
 	boxGraph := self data: collectionOfData1D.
 	boxGraph scales: collectionOfNSScales.
-	^ boxGraph.
+	^ boxGraph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBoxPlotShape >> box [
 	^ box
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBoxPlotShape >> boxWidth [
-	^ bandWidth.
+	^ bandWidth
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBoxPlotShape >> center [
 	^ graphCenter
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBoxPlotShape >> confidenceInterval [
-	^ statisticalMeasures confidenceInterval.
-	
+	^ statisticalMeasures confidenceInterval
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBoxPlotShape >> confidencePercentage [
-	^ medianConfidencePercentage 
+	^ medianConfidencePercentage
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBoxPlotShape >> confidencePercentage: aNumber [
-	medianConfidencePercentage := aNumber.
+	medianConfidencePercentage := aNumber
 ]
 
-{ #category : #shapes }
+{ #category : 'shapes' }
 RSBoxPlotShape >> createBoxShape [
 	| boxPoints q025 q075 quartiles median medianConfidenceInterval medianCIMax medianCIMin notchWidth |
 	quartiles := statisticalMeasures quartiles.
 	q025 := quartiles at: 1.
 	q075 := quartiles at: 3.
-	
-	boxPoints := { 
-		(graphCenter-(bandWidth/2)) @ (dataScale scale: q025)."bottom left" 
+
+	boxPoints := {
+		(graphCenter-(bandWidth/2)) @ (dataScale scale: q025)."bottom left"
 		(graphCenter+(bandWidth/2)) @ (dataScale scale: q025)."bottom right"
 	} asOrderedCollection.
-	
+
 	notchWidth := bandWidth * notchWidthPercentage.
 	median := quartiles at: 2.
 	medianConfidenceInterval := self medianConfidenceInterval.
 	medianCIMax := medianConfidenceInterval max.
 	medianCIMin := medianConfidenceInterval min.
-	
-	notched ifTrue: [ 
-		boxPoints addAll: { 
+
+	notched ifTrue: [
+		boxPoints addAll: {
 		(graphCenter+(bandWidth/2))@(dataScale scale: medianCIMin).
 		(graphCenter+(notchWidth/2))@(dataScale scale: median).
-		(graphCenter+(bandWidth/2))@(dataScale scale: medianCIMax).}	
+		(graphCenter+(bandWidth/2))@(dataScale scale: medianCIMax).}
 	].
-	
-	boxPoints addAll: { 
+
+	boxPoints addAll: {
 		(graphCenter+(bandWidth/2)) @ (dataScale scale: q075)."top right"
 		(graphCenter-(bandWidth/2)) @ (dataScale scale: q075)."top left" }.
 
-	notched ifTrue: [ 
-		boxPoints addAll: { 
+	notched ifTrue: [
+		boxPoints addAll: {
 		(graphCenter-(bandWidth/2))@(dataScale scale: medianCIMax).
 		(graphCenter-(notchWidth/2))@(dataScale scale: median).
-		(graphCenter-(bandWidth/2))@(dataScale scale: medianCIMin). }	
+		(graphCenter-(bandWidth/2))@(dataScale scale: medianCIMin). }
 	].
-	
-	box points: boxPoints.
+
+	box points: boxPoints
 ]
 
-{ #category : #shapes }
+{ #category : 'shapes' }
 RSBoxPlotShape >> createMedianLine [
 	| q050 medianLinePoints lineWidth |
 	q050 := statisticalMeasures quartiles second.
 	"graphCenter was already computed in shapesWithCenterAt"
 	lineWidth := bandWidth * notchWidthPercentage.
-	
-	medianLinePoints := { 
-		(graphCenter-(lineWidth/2))@ (dataScale scale: q050). 
+
+	medianLinePoints := {
+		(graphCenter-(lineWidth/2))@ (dataScale scale: q050).
 		(graphCenter+(lineWidth/2))@ (dataScale scale: q050). }.
-	medianLine := medianLine controlPoints: medianLinePoints.
+	medianLine := medianLine controlPoints: medianLinePoints
 ]
 
-{ #category : #shapes }
+{ #category : 'shapes' }
 RSBoxPlotShape >> createOutliersShapes [
 	| outliersPoints outlierDefaultSize|
 	"graphCenter was already computed in shapesWithCenterAt"
@@ -158,10 +159,10 @@ RSBoxPlotShape >> createOutliersShapes [
 			| e |
 			e := outlier copy.
 			e translateTo: out.
-	] as: RSGroup.
+	] as: RSGroup
 ]
 
-{ #category : #shapes }
+{ #category : 'shapes' }
 RSBoxPlotShape >> createShapesAndLines [
 	| shapes |
 	self graphCenter: bandOffset.
@@ -180,7 +181,7 @@ RSBoxPlotShape >> createShapesAndLines [
 	^ shapes
 ]
 
-{ #category : #shapes }
+{ #category : 'shapes' }
 RSBoxPlotShape >> createWhiskerLines [
 	| upperLimit lowerLimit q1 q3 upperWhiskerPoints lowerWhiskerPoints |
 	upperLimit := statisticalMeasures upperLimit.
@@ -193,89 +194,89 @@ RSBoxPlotShape >> createWhiskerLines [
 	upperWhisker := whisker copy.
 	lowerWhisker := whisker copy.
 	upperWhisker controlPoints: upperWhiskerPoints.
-	lowerWhisker controlPoints: lowerWhiskerPoints.
+	lowerWhisker controlPoints: lowerWhiskerPoints
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBoxPlotShape >> data [
-	^ self statisticalMeasures data.
+	^ self statisticalMeasures data
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBoxPlotShape >> data: collectionOfData1D [
-	self statisticalMeasures: (RSStatisticalMeasures data: collectionOfData1D).
+	self statisticalMeasures: (RSStatisticalMeasures data: collectionOfData1D)
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 RSBoxPlotShape >> defaultBandPadding [
 	^ 0.2
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 RSBoxPlotShape >> defaultBox [
 	^ RSPolygon new
 		color: color;
-		border: (RSBorder new color: Color black; joinRound).
+		border: (RSBorder new color: Color black; joinRound)
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 RSBoxPlotShape >> defaultBoxWidth [
 	^ 0.7
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 RSBoxPlotShape >> defaultGraphCenter [
 	^ 1
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 RSBoxPlotShape >> defaultMedianConfidencePercentage [
 	^ 95
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 RSBoxPlotShape >> defaultMedianLine [
 	^ RSLine new
 		width: 2;
-		color: Color black.
+		color: Color black
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 RSBoxPlotShape >> defaultNotched [
-	^ false.
+	^ false
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 RSBoxPlotShape >> defaultOutlier [
 	^ RSEllipse new
 		radius: 4;
 		color: Color black;
-		size: 0.
+		size: 0
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 RSBoxPlotShape >> defaultWhisker [
 	^ RSLine new
 		width: 1;
-		color: Color black.
+		color: Color black
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBoxPlotShape >> graphCenter [
-	^ graphCenter.
+	^ graphCenter
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBoxPlotShape >> graphCenter: aNumber [
-	graphCenter := aNumber.
+	graphCenter := aNumber
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 RSBoxPlotShape >> hasOutliers [
 	^ self outlierValues isNotEmpty
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSBoxPlotShape >> initialize [
 	super initialize.
 	graphCenter := self defaultGraphCenter.
@@ -289,153 +290,152 @@ RSBoxPlotShape >> initialize [
 	medianConfidencePercentage := self defaultMedianConfidencePercentage.
 	notched := self defaultNotched.
 	notchWidthPercentage := 1.
-	horizontal := false.
+	horizontal := false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBoxPlotShape >> iqr [
-	^ statisticalMeasures iqr.
+	^ statisticalMeasures iqr
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBoxPlotShape >> lowerLimit [
-	^ statisticalMeasures lowerLimit.
+	^ statisticalMeasures lowerLimit
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBoxPlotShape >> lowerWhisker [
 	^ lowerWhisker
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSBoxPlotShape >> maxDataValue [
 	| maxValue |
 	maxValue := self upperLimit.
 	notched ifTrue: [ maxValue := maxValue max: self medianConfidenceInterval max ].
-	self hasOutliers 
+	self hasOutliers
 		ifTrue: [ maxValue := maxValue max: (self outlierValues max) ].
-	^ maxValue.
+	^ maxValue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBoxPlotShape >> median [
-	^ statisticalMeasures median.
+	^ statisticalMeasures median
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBoxPlotShape >> medianConfidenceInterval [
-	^ statisticalMeasures medianConfidenceInterval.
-	
+	^ statisticalMeasures medianConfidenceInterval
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBoxPlotShape >> medianConfidencePercentage: aNumber [
-	medianConfidencePercentage := aNumber.
+	medianConfidencePercentage := aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBoxPlotShape >> medianLine [
-	^ medianLine.
+	^ medianLine
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBoxPlotShape >> medianLine: aRSLineModel [
 	medianLine := aRSLineModel copy
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSBoxPlotShape >> minDataValue [
 	| minValue |
 	minValue := self lowerLimit.
 	notched ifTrue: [ minValue := minValue min: (self medianConfidenceInterval min) ].
-	self hasOutliers 
+	self hasOutliers
 		ifTrue: [ minValue := minValue min: (self outlierValues min) ].
-	^ minValue.
+	^ minValue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBoxPlotShape >> notch: aBoolean [
 	notched := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBoxPlotShape >> outlier: markerShape [
 	outlier := markerShape
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBoxPlotShape >> outlierMarker: markerShapeString [
-	outlier := (RSShapeFactory shapeFromString: markerShapeString) color: Color black.
+	outlier := (RSShapeFactory shapeFromString: markerShapeString) color: Color black
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBoxPlotShape >> outlierSize: aDimensionInPixels [
-	outlier size: aDimensionInPixels.
+	outlier size: aDimensionInPixels
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBoxPlotShape >> outlierValues [
-	^ statisticalMeasures outliers.
+	^ statisticalMeasures outliers
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBoxPlotShape >> outliers [
-	^ outlier.
+	^ outlier
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBoxPlotShape >> outliers: aRSGroupOfRSElipses [
 	outliers := aRSGroupOfRSElipses
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBoxPlotShape >> quartiles [
-	^ statisticalMeasures quartiles.
+	^ statisticalMeasures quartiles
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSBoxPlotShape >> renderIn: canvas [
 	self addChildrenToComposite.
-	canvas add: self.
+	canvas add: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBoxPlotShape >> scalePoint: aPoint [
 	^ (bandScale scale: aPoint x) @ (dataScale scale: aPoint y)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBoxPlotShape >> scales: collectionOfNSScales [
 	self bandScale: collectionOfNSScales first.
-	self dataScale: collectionOfNSScales second.
+	self dataScale: collectionOfNSScales second
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBoxPlotShape >> statisticalMeasures [
-	^ statisticalMeasures.
+	^ statisticalMeasures
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBoxPlotShape >> statisticalMeasures: aRSStatisticalMeasures [
-	statisticalMeasures := aRSStatisticalMeasures.
+	statisticalMeasures := aRSStatisticalMeasures
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBoxPlotShape >> upperLimit [
-	^ statisticalMeasures upperLimit.
+	^ statisticalMeasures upperLimit
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBoxPlotShape >> upperWhisker [
 	^ upperWhisker
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSBoxPlotShape >> whiskerFormat: aString [
-	whisker format: aString.
+	whisker format: aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBoxPlotShape >> whiskers [
-	^ whisker.
+	^ whisker
 ]

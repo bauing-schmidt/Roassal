@@ -1,10 +1,12 @@
 Class {
-	#name : #RSChartTickTest,
-	#superclass : #RSTest,
-	#category : #'Roassal-Chart-Tests-Base'
+	#name : 'RSChartTickTest',
+	#superclass : 'RSTest',
+	#category : 'Roassal-Chart-Tests-Base',
+	#package : 'Roassal-Chart-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSChartTickTest >> testDefaultFont [
 	| plot canvas ticks labels defaultFont |
 	plot := RSLinePlot y: #(1 2 3).
@@ -13,10 +15,10 @@ RSChartTickTest >> testDefaultFont [
 	ticks := plot verticalTick.
 	labels := ticks labels.
 	defaultFont := labels anyOne class familyFontName .
-	self assert: (labels allSatisfy: [ :label | label fontName = defaultFont ]).
+	self assert: (labels allSatisfy: [ :label | label fontName = defaultFont ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSChartTickTest >> testDoNotUseNiceLabel [
 
 	| x p numberOfTicks vertical |
@@ -30,7 +32,7 @@ RSChartTickTest >> testDoNotUseNiceLabel [
 	self assert: vertical labels size equals: numberOfTicks
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSChartTickTest >> testFromNames [
 
 	| dates y data x plot horizontal |
@@ -41,10 +43,10 @@ RSChartTickTest >> testFromNames [
 		dates add: d.
 		y add: f ].
 	x := 1 to: dates size.
-	
+
 	plot := RSLinePlot new x: x y: y.
 	plot extent: 300 @ 200.
-	
+
 	horizontal := plot horizontalTick fromNames: dates.
 	plot verticalTick numberOfTicks: 10;
 			 asFloat.
@@ -52,7 +54,7 @@ RSChartTickTest >> testFromNames [
 	self assert: horizontal labels size equals: dates size
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSChartTickTest >> testFromNamesWithEmptyData [
 	| dates x y plot |
 	dates := {}.
@@ -64,7 +66,7 @@ RSChartTickTest >> testFromNamesWithEmptyData [
 	self should: [ plot horizontalTick fromNames: dates ] raise: Error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSChartTickTest >> testFromNamesWithOneData [
 	| names indices values plot |
 	names := { 'Simple'.}.
@@ -76,10 +78,10 @@ RSChartTickTest >> testFromNamesWithOneData [
 		yourself.
 	plot horizontalTick fromNames: names.
 	plot removeVerticalTicks.
-	plot build.
+	plot build
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSChartTickTest >> testSetFontSize [
 	| plot canvas ticks labels |
 	plot := RSLinePlot y: #(1 2 3).
@@ -88,5 +90,5 @@ RSChartTickTest >> testSetFontSize [
 	ticks configuration fontSize: 12.
 	plot build.
 	labels := ticks labels.
-	self assert: (labels allSatisfy: [ :label | label fontSize = 12 ]).
+	self assert: (labels allSatisfy: [ :label | label fontSize = 12 ])
 ]

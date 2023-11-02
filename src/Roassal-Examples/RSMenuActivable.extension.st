@@ -1,9 +1,9 @@
-Extension { #name : #RSMenuActivable }
+Extension { #name : 'RSMenuActivable' }
 
-{ #category : #'*Roassal-Examples' }
+{ #category : '*Roassal-Examples' }
 RSMenuActivable class >> example [
 	| m |
-	
+
 	m := RSCanvas new.
 	m addAll: ((1 to: 10) collect: [:each | | label |
 		label := RSLabel new

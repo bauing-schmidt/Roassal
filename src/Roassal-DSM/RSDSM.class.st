@@ -3,8 +3,8 @@ new version for Dependency Structural Matrix.
 For a collection of objects and an arbitrary dependency function.
 "
 Class {
-	#name : #RSDSM,
-	#superclass : #RSBuilder,
+	#name : 'RSDSM',
+	#superclass : 'RSBuilder',
 	#instVars : [
 		'shape',
 		'objectsX',
@@ -20,58 +20,63 @@ Class {
 		'labelsX',
 		'colorBlock'
 	],
-	#category : #'Roassal-DSM-Core'
+	#category : 'Roassal-DSM-Core',
+	#package : 'Roassal-DSM',
+	#tag : 'Core'
 }
 
-{ #category : #'hooks - labels' }
+{ #category : 'hooks - labels' }
 RSDSM >> addLabels: aRSCanvas [
 	self addLabelsLeft: aRSCanvas.
 	self addLabelsTop: aRSCanvas
 ]
 
-{ #category : #'hooks - labels' }
+{ #category : 'hooks - labels' }
 RSDSM >> addLabelsIfNecessary: aRSCanvas [
 	self wantsLabels ifFalse: [ ^ self ].
 	self addLabels: aRSCanvas
 ]
 
-{ #category : #'hooks - labels' }
+{ #category : 'hooks - labels' }
 RSDSM >> addLabelsLeft: aRSCanvas [
 	| column |
 	column := self columnAt: 1.
 	aRSCanvas addAll: (labelsY := column collect: [ :s | self createLabelShapeY: s ])
 ]
 
-{ #category : #'hooks - labels' }
+{ #category : 'hooks - labels' }
 RSDSM >> addLabelsTop: aRSCanvas [
 	| row |
 	row := self rowAt: 1.
 	aRSCanvas addAll: (labelsX := row collect: [ :s | self createLabelShapeX: s ])
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSDSM >> color [
 	^ colorBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSDSM >> color: aBlock [
 	colorBlock := aBlock
 ]
 
-{ #category : #'accessing - computed' }
+{ #category : 'accessing - computed' }
 RSDSM >> columnAt: aNumber [
-	^ matrix atRow: aNumber
+	^ ((matrix keys 
+		select: [ :point| point x = aNumber ])
+		asSortedCollection: [ :a :b | a y < b y ] )
+		collect: [ :point | matrix at: point ] as: RSGroup
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSDSM >> computeColor: tuple [
 	^ (self isAssocDependent: tuple)
 		ifTrue: [ self selectedColor ]
 		ifFalse: [ self unSelectedColor ]
 ]
 
-{ #category : #'hooks - labels' }
+{ #category : 'hooks - labels' }
 RSDSM >> createLabelShapeX: aRSBox [
 	| label model |
 	model := shouldFeedX
@@ -89,7 +94,7 @@ RSDSM >> createLabelShapeX: aRSBox [
 	^ label
 ]
 
-{ #category : #'hooks - labels' }
+{ #category : 'hooks - labels' }
 RSDSM >> createLabelShapeY: aRSBox [
 	| label model |
 	model := shouldFeedX
@@ -106,7 +111,7 @@ RSDSM >> createLabelShapeY: aRSBox [
 	^ label
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSDSM >> createShape: tuple [
 	^ shape copy
 		model: tuple;
@@ -114,7 +119,7 @@ RSDSM >> createShape: tuple [
 		yourself
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSDSM >> createShapeX: anObjectX y: anObjectY position: position list: list [
 	| box |
 	box := self createShape: (shouldFeedX
@@ -126,32 +131,32 @@ RSDSM >> createShapeX: anObjectX y: anObjectY position: position list: list [
 	^ box
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSDSM >> createShapes [
 	| group |
 	group := RSGroup new.
-	matrix := Array2D rows: objectsX size columns: objectsY size.
+	matrix := Dictionary new.
 	objectsY doWithIndex: [ :anObjectY :k |
-		objectsX doWithIndex: [ :anObjectX :j |
+		objectsX doWithIndex: [ :anObjectX :j | | point |
+			point := j@k.
 			matrix
-				at: j
-				at: k
+				at: point
 				put: (self
 					createShapeX: anObjectX
 					y: anObjectY
-					position: j@k
+					position: point
 					list: group)
 		]
 	].
 	^ group
 ]
 
-{ #category : #'accessing - defaults' }
+{ #category : 'accessing - defaults' }
 RSDSM >> defaultContainer [
 	^ super defaultContainer @ RSCanvasController
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSDSM >> defaultShape [
 	^ RSBox new
 		size: 15;
@@ -160,23 +165,23 @@ RSDSM >> defaultShape [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSDSM >> dependency [
 	^ dependency
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSDSM >> dependency: aOneArgBlock [
 	"Take either X or Y values"
 	dependency := aOneArgBlock
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 RSDSM >> hideLabels [
 	wantsLabels := false
 ]
 
-{ #category : #highlighting }
+{ #category : 'highlighting' }
 RSDSM >> highlight: evt [
 	| position |
 	shape := evt shape.
@@ -185,7 +190,7 @@ RSDSM >> highlight: evt [
 	self highlightRectangle: (self rowAt: position y) key: #rowRect
 ]
 
-{ #category : #highlighting }
+{ #category : 'highlighting' }
 RSDSM >> highlightRectangle: aGroupOfShapes key: key [
 	| canvas rectangle box |
 	canvas := aGroupOfShapes anyOne canvas.
@@ -200,14 +205,14 @@ RSDSM >> highlightRectangle: aGroupOfShapes key: key [
 	canvas propertyAt: key put: box
 ]
 
-{ #category : #highlighting }
+{ #category : 'highlighting' }
 RSDSM >> highlightable [
 	^ RSHighlightable new
 		when: RSHighlightEvent send: #highlight: to: self;
 		when: RSUnHighlightEvent send: #unhighlight: to: self
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSDSM >> initialize [
 	super initialize.
 	shape := self defaultShape.
@@ -220,7 +225,7 @@ RSDSM >> initialize [
 		objects: #()
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSDSM >> isAssocDependent: assoc [
 	| v |
 	v := dependency rsValue: assoc key.
@@ -230,32 +235,32 @@ RSDSM >> isAssocDependent: assoc [
 		ifFalse: [ false ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSDSM >> labelShapeX [
 	^ labelShapeX ifNil: [ labelShapeX := RSMultilineLabelBuilder new  ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSDSM >> labelShapeY [
 	^ labelShapeY ifNil: [ labelShapeY := RSMultilineLabelBuilder new  ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSDSM >> labels [
 	^ self labelsX, self labelsY
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSDSM >> labelsX [
 	^ labelsX ifNil: [ #() ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSDSM >> labelsY [
 	^ labelsY ifNil: [ #() ]
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSDSM >> layoutShapes: aGroup [
 	RSGridLayout new
 		gapSize: 0;
@@ -263,49 +268,59 @@ RSDSM >> layoutShapes: aGroup [
 		on: aGroup
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSDSM >> matrixKey [
 	^ #matrixIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
+RSDSM >> numberOfColumns [
+	^ matrix keys inject: 0 into: [ :max :p | max max: p x ]
+]
+
+{ #category : 'accessing' }
 RSDSM >> numberOfObjects [
 	^ self objects size
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
+RSDSM >> numberOfRows [
+	^ matrix keys inject: 0 into: [ :max :p | max max: p y ]
+]
+
+{ #category : 'accessing' }
 RSDSM >> objects [
 	^ (objectsX, objectsY) asSet
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSDSM >> objects: someObjects [
 	self
 		objectsX: someObjects;
 		objectsY: someObjects
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSDSM >> objectsX [
 	^ objectsX
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSDSM >> objectsX: someObjects [
 	objectsX := someObjects
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSDSM >> objectsY [
 	^ objectsY
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSDSM >> objectsY: someObjects [
 	objectsY := someObjects
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSDSM >> renderIn: aCanvas [
 	shapes := self createShapes.
 	aCanvas addAll: shapes.
@@ -313,68 +328,71 @@ RSDSM >> renderIn: aCanvas [
 	self addLabelsIfNecessary: aCanvas
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSDSM >> rotation [
 	^ rotation
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSDSM >> rotation: aNumberInDegrees [
 	rotation := aNumberInDegrees
 ]
 
-{ #category : #'accessing - computed' }
+{ #category : 'accessing - computed' }
 RSDSM >> rowAt: aNumber [
-	^ matrix atColumn: aNumber
+	^ ((matrix keys 
+		select: [ :point| point y = aNumber ])
+		asSortedCollection: [ :a :b | a x < b x ] )
+		collect: [ :point | matrix at: point ] as: RSGroup
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSDSM >> selectedColor [
 	^ Color colorFrom: '#4d79ff'
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 RSDSM >> setShouldFeedX [
 	shouldFeedX := true
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 RSDSM >> setShouldFeedY [
 	shouldFeedX := false
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSDSM >> setUpShape: box [
 	box announcer: shape announcer
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSDSM >> shape [
 	^ shape
 ]
 
-{ #category : #'accessing - computed' }
+{ #category : 'accessing - computed' }
 RSDSM >> shapeAt: aPoint [
-	^ matrix at: aPoint y at: aPoint x
+	^ matrix at: aPoint y @ aPoint x
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 RSDSM >> showLabels [
 	wantsLabels := true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSDSM >> unSelectedColor [
 	^ Color veryVeryLightGray
 ]
 
-{ #category : #highlighting }
+{ #category : 'highlighting' }
 RSDSM >> unhighlight: evt [
 	self unhighlight: evt key: #columnRect.
 	self unhighlight: evt key: #rowRect
 ]
 
-{ #category : #highlighting }
+{ #category : 'highlighting' }
 RSDSM >> unhighlight: evt key: key [
 	| canvas |
 	canvas := evt canvas.
@@ -383,7 +401,7 @@ RSDSM >> unhighlight: evt key: key [
 		canvas removeKey: key ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSDSM >> wantsLabels [
 	^ wantsLabels
 ]

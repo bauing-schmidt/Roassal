@@ -1,33 +1,35 @@
 Class {
-	#name : #RSBarPlotShape,
-	#superclass : #RSAbstractBandPlotShape,
+	#name : 'RSBarPlotShape',
+	#superclass : 'RSAbstractBandPlotShape',
 	#instVars : [
 		'data',
 		'bar'
 	],
-	#category : #'Roassal-Chart-Plots'
+	#category : 'Roassal-Chart-Plots',
+	#package : 'Roassal-Chart',
+	#tag : 'Plots'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBarPlotShape class >> data: aValue [
-	^ (self new) data: aValue.
+	^ (self new) data: aValue
 ]
 
-{ #category : #shapes }
+{ #category : 'shapes' }
 RSBarPlotShape >> createBar [
 	| barPoints |
-	
-	barPoints := { 
-		(bandOffset-(bandWidth/2)) @ (dataScale scale: 0)."bottom left" 
+
+	barPoints := {
+		(bandOffset-(bandWidth/2)) @ (dataScale scale: 0)."bottom left"
 		(bandOffset+(bandWidth/2)) @ (dataScale scale: 0)."bottom right"
 		(bandOffset+(bandWidth/2)) @ (dataScale scale: data)."top right"
-		(bandOffset-(bandWidth/2)) @ (dataScale scale: data)."top left" 
+		(bandOffset-(bandWidth/2)) @ (dataScale scale: data)."top left"
 	} asOrderedCollection.
-	
-	bar points: barPoints.
+
+	bar points: barPoints
 ]
 
-{ #category : #shapes }
+{ #category : 'shapes' }
 RSBarPlotShape >> createShapesAndLines [
 	| shapes |
 	self createBar.
@@ -36,32 +38,32 @@ RSBarPlotShape >> createShapesAndLines [
 	^ shapes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBarPlotShape >> data: aValue [
 	data := aValue
 ]
 
-{ #category : #shapes }
+{ #category : 'shapes' }
 RSBarPlotShape >> defaultBar [
 	^ RSPolygon new
 		color: color;
-		border: (RSBorder new color: Color black; joinRound).
+		border: (RSBorder new color: Color black; joinRound)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSBarPlotShape >> initialize [
 	super initialize.
 	bar := self defaultBar.
 	horizontal := false.
-	shouldShowBand := self defaultShouldShowBand.
+	shouldShowBand := self defaultShouldShowBand
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSBarPlotShape >> maxDataValue [
 	^ data
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSBarPlotShape >> minDataValue [
 	| minValue |
 	minValue := 0.
@@ -69,8 +71,8 @@ RSBarPlotShape >> minDataValue [
 	^ minValue
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSBarPlotShape >> renderIn: canvas [
 	self addChildrenToComposite.
-	canvas add: self.
+	canvas add: self
 ]

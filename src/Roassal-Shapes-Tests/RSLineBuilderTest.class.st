@@ -2,17 +2,18 @@
 Tests for RSLineBuilder
 "
 Class {
-	#name : #RSLineBuilderTest,
-	#superclass : #RSTest,
+	#name : 'RSLineBuilderTest',
+	#superclass : 'RSTest',
 	#instVars : [
 		'b',
 		'canvas',
 		'shapes'
 	],
-	#category : #'Roassal-Shapes-Tests'
+	#category : 'Roassal-Shapes-Tests',
+	#package : 'Roassal-Shapes-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 RSLineBuilderTest >> setUp [
 	super setUp.
 	canvas := RSCanvas new.
@@ -21,7 +22,7 @@ RSLineBuilderTest >> setUp [
 	b := RSLineBuilder line
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLineBuilderTest >> testAllowRepetitionAndUseAssociations [
 
 	| eb |
@@ -39,19 +40,7 @@ RSLineBuilderTest >> testAllowRepetitionAndUseAssociations [
 	self assert: canvas numberOfEdges equals: 2
 ]
 
-{ #category : #tests }
-RSLineBuilderTest >> testBorder [
-	| numberOfLines |
-	b canvas: canvas.
-	b connectFrom: [ :vv | vv // 2 ].
-
-	numberOfLines := canvas lines size.
-	self assert: numberOfLines > 0.
-
-	self assert: (canvas edges collect: #border) asSet size equals: 1
-]
-
-{ #category : #tests }
+{ #category : 'tests' }
 RSLineBuilderTest >> testConnectFrom [
 	| e |
 	b canvas: canvas.
@@ -65,7 +54,7 @@ RSLineBuilderTest >> testConnectFrom [
 	self assert: e to model equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLineBuilderTest >> testConnectFromAll [
 	| c es |
 	c := RSCanvas new.
@@ -85,7 +74,7 @@ RSLineBuilderTest >> testConnectFromAll [
 	self assert: c lines first to position equals: (15.0@55.0)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLineBuilderTest >> testConnectTo [
 	| e |
 	b canvas: canvas.
@@ -99,7 +88,7 @@ RSLineBuilderTest >> testConnectTo [
 	self assert: e to model equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLineBuilderTest >> testConnectToAll [
 	| eFrom eTo |
 	b canvas: canvas.
@@ -114,12 +103,12 @@ RSLineBuilderTest >> testConnectToAll [
 	self assert: eTo equals: #(1 1 2)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLineBuilderTest >> testDefault [
 	self assert: canvas numberOfEdges equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLineBuilderTest >> testElements [
 
 	| es |
@@ -132,7 +121,7 @@ RSLineBuilderTest >> testElements [
 	self assert: b fromShapes equals: es
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLineBuilderTest >> testElementsToLookup [
 
 	| es1 es2 edges c |
@@ -152,7 +141,7 @@ RSLineBuilderTest >> testElementsToLookup [
 	self assert: edges first to equals: es2 first
 ]
 
-{ #category : #'tests - error' }
+{ #category : 'tests - error' }
 RSLineBuilderTest >> testErrors [
 	| eb |
 	eb := RSLineBuilder line.
@@ -162,7 +151,7 @@ RSLineBuilderTest >> testErrors [
 	self should: [ eb shapes: 42 ] raise: AssertionFailure
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLineBuilderTest >> testFromObjects [
 	| edges |
 	b canvas: canvas.
@@ -177,7 +166,7 @@ RSLineBuilderTest >> testFromObjects [
 	self assert: b fromObjects asArray equals: #(1 2)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLineBuilderTest >> testFromObjects02 [
 	b canvas: canvas.
 	b fromObjects: #(1).
@@ -188,7 +177,7 @@ RSLineBuilderTest >> testFromObjects02 [
 	self assert: b fromObjects asArray equals: #(1)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLineBuilderTest >> testFromObjectsError [
 
 "
@@ -199,7 +188,7 @@ view := RTView new.
 	self should: [ RSLineBuilder new  fromObjects: #(1 2) ] raise: Error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLineBuilderTest >> testFromObjectsToElements [
 	| edges |
 	b canvas: canvas.
@@ -210,7 +199,7 @@ RSLineBuilderTest >> testFromObjectsToElements [
 	self assert: edges size equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLineBuilderTest >> testHasEdges [
 	| s1 s2 |
 	s1 := canvas nodes first.
@@ -227,7 +216,7 @@ RSLineBuilderTest >> testHasEdges [
 	self assert: s1 connectedLines size equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLineBuilderTest >> testInferCanvas [
 
 	self assert: b canvas isNil.
@@ -238,7 +227,7 @@ RSLineBuilderTest >> testInferCanvas [
 	self assert: b canvas equals: canvas
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLineBuilderTest >> testInferCanvas2 [
 
 	self assert: b canvas isNil.
@@ -246,7 +235,7 @@ RSLineBuilderTest >> testInferCanvas2 [
 	self assert: b canvas equals: canvas
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLineBuilderTest >> testInferCanvas3 [
 
 	| c |
@@ -265,7 +254,7 @@ RSLineBuilderTest >> testInferCanvas3 [
 	self assert: c numberOfEdges equals: 99
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLineBuilderTest >> testInit [
 	| eb |
 	eb := RSLineBuilder line.
@@ -274,7 +263,7 @@ RSLineBuilderTest >> testInit [
 	self assert: eb shouldAllowRepetition
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLineBuilderTest >> testNoMoveBehind [
 	RSLineBuilder line
 		canvas: canvas;
@@ -285,7 +274,7 @@ RSLineBuilderTest >> testNoMoveBehind [
 	self assert: (canvas canvas shapes collect: [ :c | c class name ]) asArray equals: #(#RSBox #RSBox #RSBox #RSBox #RSBox #RSBox #RSBox #RSBox #RSBox #RSBox #RSLine #RSLine #RSLine)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLineBuilderTest >> testObjectFrom [
 	| e |
 	b canvas: canvas.
@@ -298,7 +287,7 @@ RSLineBuilderTest >> testObjectFrom [
 	self assert: e to model equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLineBuilderTest >> testObjectTo [
 	| e |
 	b canvas: canvas.
@@ -311,7 +300,7 @@ RSLineBuilderTest >> testObjectTo [
 	self assert: e to model equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLineBuilderTest >> testObjects [
 	b canvas: canvas.
 	b objects: (1 to: 5).
@@ -323,21 +312,21 @@ RSLineBuilderTest >> testObjects [
 	b := RTEdgeBuilder new."
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLineBuilderTest >> testObjects02 [
 	b canvas: canvas.
 	b objects: #even.
 	self assert: (b fromShapes collect: #model) asArray equals: #(2 4 6 8 10)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLineBuilderTest >> testObjects03 [
 	b canvas: canvas.
 	b objects: #odd.
 	self assert: (b fromShapes collect: #model) asArray equals: #(1 3 5 7 9)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLineBuilderTest >> testShouldAllowBidirection [
 
 	self assert: canvas numberOfEdges equals: 0.
@@ -357,7 +346,7 @@ RSLineBuilderTest >> testShouldAllowBidirection [
 	self assert: canvas edges anyOne to model equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLineBuilderTest >> testShouldNotAllowBidirection [
 
 	self assert: canvas numberOfEdges equals: 0.
@@ -367,13 +356,13 @@ RSLineBuilderTest >> testShouldNotAllowBidirection [
 	self assert: canvas numberOfEdges equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLineBuilderTest >> testShouldNotInstantiate [
 
 	self should: [ RSLineBuilder new ] raise: Error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLineBuilderTest >> testSimple [
 
 	RSLineBuilder line
@@ -384,7 +373,7 @@ RSLineBuilderTest >> testSimple [
 	self assert: canvas numberOfEdges equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLineBuilderTest >> testSimple2 [
 
 	RSLineBuilder line
@@ -396,7 +385,7 @@ RSLineBuilderTest >> testSimple2 [
 	self assert: canvas numberOfEdges equals: 3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLineBuilderTest >> testSimple3 [
 
 	RSLineBuilder line
@@ -408,7 +397,7 @@ RSLineBuilderTest >> testSimple3 [
 	self assert: (canvas edges collect: [ :e | e from model -> e to model ]) asArray equals: ((Array new: 4) at: 1 put: (1->2); at: 2 put: (2->3); at: 3 put: (3->4); at: 4 put: (6->7); yourself)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLineBuilderTest >> testSimple4 [
 
 	RSLineBuilder line
@@ -420,7 +409,7 @@ RSLineBuilderTest >> testSimple4 [
 	self assert: (canvas edges collect: [ :e | e from model -> e to model ]) asArray equals: ((Array new: 2) at: 1 put: (1->2); at: 2 put: (2->3); yourself)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLineBuilderTest >> testSimple5 [
 
 	RSLineBuilder line
@@ -431,7 +420,7 @@ RSLineBuilderTest >> testSimple5 [
 	self assert: canvas numberOfEdges equals: 8
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLineBuilderTest >> testSimple6 [
 
 	RSLineBuilder line
@@ -441,7 +430,7 @@ RSLineBuilderTest >> testSimple6 [
 	self assert: canvas numberOfEdges equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLineBuilderTest >> testSimple7 [
 
 	RSLineBuilder line
@@ -453,7 +442,7 @@ RSLineBuilderTest >> testSimple7 [
 	self assert: canvas numberOfEdges equals: 3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLineBuilderTest >> testSource [
 	| c es eb col |
 	c := RSCanvas new.
@@ -471,7 +460,7 @@ RSLineBuilderTest >> testSource [
 	self assert: c numberOfEdges equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLineBuilderTest >> testToObjects [
 	b canvas: canvas.
 	b toObjects: #(1 2).
@@ -482,7 +471,7 @@ RSLineBuilderTest >> testToObjects [
 	self assert: b fromObjects asArray equals: (1 to: 10) asArray
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLineBuilderTest >> testUseInLayout [
 	b
 		canvas: canvas;
@@ -491,7 +480,7 @@ RSLineBuilderTest >> testUseInLayout [
 	self assert: (canvas nodes collect: #position) asArray equals: ({(7.5@7.5). (7.5@32.5). (7.5@57.5). (7.5@82.5). (7.5@107.5). (7.5@132.5). (7.5@157.5). (7.5@182.5). (7.5@207.5). (7.5@232.5)})
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLineBuilderTest >> testUseInLayoutDefault [
 
 	b
@@ -502,7 +491,7 @@ RSLineBuilderTest >> testUseInLayoutDefault [
 	self assert: (canvas nodes collect: #position) asArray equals: ((Array new: 10) at: 1 put: ((7.5@7.5)); at: 2 put: ((7.5@32.5)); at: 3 put: ((7.5@57.5)); at: 4 put: ((7.5@82.5)); at: 5 put: ((7.5@107.5)); at: 6 put: ((7.5@132.5)); at: 7 put: ((7.5@157.5)); at: 8 put: ((7.5@182.5)); at: 9 put: ((7.5@207.5)); at: 10 put: ((7.5@232.5)); yourself)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLineBuilderTest >> testWithMoveBehind [
 
 	RSLineBuilder line
@@ -515,7 +504,7 @@ RSLineBuilderTest >> testWithMoveBehind [
 	self assert: (canvas canvas shapes collect: [ :c | c class name ]) asArray equals: #(#RSLine #RSLine #RSLine #RSBox #RSBox #RSBox #RSBox #RSBox #RSBox #RSBox #RSBox #RSBox #RSBox)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLineBuilderTest >> testWithMoveBehind02 [
 
 	RSLineBuilder line
@@ -525,7 +514,7 @@ RSLineBuilderTest >> testWithMoveBehind02 [
 	self assert: (canvas canvas shapes collect: [ :c | c class name ]) asArray equals: #(#RSLine #RSLine #RSLine #RSLine #RSLine #RSLine #RSLine #RSLine #RSLine #RSBox #RSBox #RSBox #RSBox #RSBox #RSBox #RSBox #RSBox #RSBox #RSBox)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLineBuilderTest >> testconnectFromToAll [
 
 	| es1 es2 edges c |

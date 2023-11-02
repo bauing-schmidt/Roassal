@@ -19,49 +19,51 @@ My methods are utilities method to access information of the canvas, like the vi
 
 "
 Class {
-	#name : #RSAbstractControlCanvasInteraction,
-	#superclass : #RSAbstractCanvasInteraction,
+	#name : 'RSAbstractControlCanvasInteraction',
+	#superclass : 'RSAbstractCanvasInteraction',
 	#instVars : [
 		'limits'
 	],
-	#category : #'Roassal-Interaction-Controls'
+	#category : 'Roassal-Interaction-Controls',
+	#package : 'Roassal-Interaction',
+	#tag : 'Controls'
 }
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RSAbstractControlCanvasInteraction >> computeExpandedRectangle: aCanvas [
 	| rectangle matrix |
 	"we obtains the rectangle in the canvas space".
 	rectangle := self encompassingRectangleFor: aCanvas.
 	matrix := aCanvas camera originMatrix.
-	
+
 	"then we convert that to morph coordinates"
-	rectangle := Rectangle encompassing: (rectangle corners 
+	rectangle := Rectangle encompassing: (rectangle corners
 		collect: [:corner | matrix transform: corner]).
 	"we expand the rectangle with the padding"
 	rectangle := self configuration padding expandRectangle: rectangle.
 	"the rectangle returns to the canvas space"
-	rectangle := Rectangle encompassing: (rectangle corners 
+	rectangle := Rectangle encompassing: (rectangle corners
 		collect: [:corner | matrix inverseTransform: corner]).
 
 	^ rectangle
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractControlCanvasInteraction >> configuration [
 	^ limits ifNil: [ limits := RSControlConfiguration new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractControlCanvasInteraction >> configuration: aRSControlConfiguration [
 	limits := aRSControlConfiguration
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RSAbstractControlCanvasInteraction >> correctCamera: camera [
 	^ self correctCamera: camera matrixDo: [ :mat | ]
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RSAbstractControlCanvasInteraction >> correctCamera: camera matrixDo: aBlock [
 	| canvas rectangle matrix origin correctRectangle |
 	canvas := camera canvas.
@@ -74,19 +76,19 @@ RSAbstractControlCanvasInteraction >> correctCamera: camera matrixDo: aBlock [
 		correctRectangle := self correctRectangle: rectangle camera: camera.
 		diff := (matrix transform: rectangle origin) - (matrix transform: correctRectangle origin).
 		origin := origin - diff ].
-	^ origin.
+	^ origin
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RSAbstractControlCanvasInteraction >> correctCameraPosition: aCanvas inRectangle: rectangle position: position scale: scale [
 	| canvasRect x y p |
 	p := position.
-	
+
 	canvasRect := Rectangle
 		floatCenter: p
 		extent: aCanvas extent / scale.
 	canvasRect := aCanvas visibleRectangle.
-	
+
 	x := rectangle width <= canvasRect width
 		ifTrue: [rectangle origin x < canvasRect origin x
 			ifTrue: [ p x - (canvasRect origin x - rectangle origin x) ]
@@ -112,7 +114,7 @@ RSAbstractControlCanvasInteraction >> correctCameraPosition: aCanvas inRectangle
 	^ x@y
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RSAbstractControlCanvasInteraction >> correctRectangle: rectangle camera: camera [
 	| visibleRectangle correctX correctY |
 	visibleRectangle := camera visibleRectangle.
@@ -129,7 +131,7 @@ RSAbstractControlCanvasInteraction >> correctRectangle: rectangle camera: camera
 	^ correctX @ correctY extent: rectangle extent
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RSAbstractControlCanvasInteraction >> correctValues: array [
 	| min max targetMin targetMax width targetWidth res |
 	min := array first.
@@ -139,52 +141,52 @@ RSAbstractControlCanvasInteraction >> correctValues: array [
 	width := max - min.
 	targetWidth := targetMax - targetMin.
 	res := width < targetWidth ifTrue: [
-		max < targetMax ifTrue: [ 
+		max < targetMax ifTrue: [
 			min < targetMin
 				ifTrue: [ min + (targetMin - min) ]
 				ifFalse: [ min ]
 		] ifFalse: [ min - (max - targetMax) ].
-	] ifFalse: [ 
-		max < targetMax ifTrue: [ 
+	] ifFalse: [
+		max < targetMax ifTrue: [
 			min-(max - targetMax)
-		] ifFalse: [ 
+		] ifFalse: [
 			min < targetMin
 				ifTrue: [ min ]
 				ifFalse: [ min + (targetMin - min) ]
 		].
 	].
-	
+
 	^ res
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RSAbstractControlCanvasInteraction >> encompassingRectangleFor: aCanvas [
 	^ aCanvas propertyAt: #encompassingRectangle
 		ifAbsentPut: [ aCanvas encompassingRectangle  ]
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RSAbstractControlCanvasInteraction >> expandedRectangle: aCanvas [
-	"^ aCanvas 
+	"^ aCanvas
 		propertyAt: #expanedEncompassingRectangle
 		ifAbsentPut: [ self computeExpandedRectangle: aCanvas ]."
 	^ self computeExpandedRectangle: aCanvas
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RSAbstractControlCanvasInteraction >> removeRectanglesFor: aCanvas [
 	aCanvas
 		removeKey: #encompassingRectangle;
 		removeKey: #expanedEncompassingRectangle
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSAbstractControlCanvasInteraction >> renderLegendOn: anRSLegend [
 	"put a nice description in this legend builder"
 	self subclassResponsibility
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RSAbstractControlCanvasInteraction >> scaleFor: aScale [
 	| l |
 	l := self configuration.

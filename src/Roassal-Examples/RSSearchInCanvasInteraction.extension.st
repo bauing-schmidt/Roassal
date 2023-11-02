@@ -1,6 +1,6 @@
-Extension { #name : #RSSearchInCanvasInteraction }
+Extension { #name : 'RSSearchInCanvasInteraction' }
 
-{ #category : #'*Roassal-Examples' }
+{ #category : '*Roassal-Examples' }
 RSSearchInCanvasInteraction class >> exampleCollection [
 	| c shapes lb |
 	c := RSCanvas new.
@@ -19,7 +19,7 @@ RSSearchInCanvasInteraction class >> exampleCollection [
 		yourself
 ]
 
-{ #category : #'*Roassal-Examples' }
+{ #category : '*Roassal-Examples' }
 RSSearchInCanvasInteraction class >> exampleCollection2 [
 
 	| c classes g elements high con |
@@ -42,9 +42,9 @@ RSSearchInCanvasInteraction class >> exampleCollection2 [
 		on: elements.
 
 	con := RSCanvasController new.
-	
+
 	c @ con.
-	
+
 	c searchInteraction useExactMatch.
 	c selectionInteraction shadowColor: Color green translucent.
 	^ c open

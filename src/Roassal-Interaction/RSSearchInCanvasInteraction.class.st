@@ -17,8 +17,8 @@ Search In Canvas will highlight with a shadow a current shape. You have to click
 The selection of the elements is based on each shape model `asString`
 "
 Class {
-	#name : #RSSearchInCanvasInteraction,
-	#superclass : #RSAbstractControlCanvasInteraction,
+	#name : 'RSSearchInCanvasInteraction',
+	#superclass : 'RSAbstractControlCanvasInteraction',
 	#instVars : [
 		'canvas',
 		'useExactMatch',
@@ -26,16 +26,18 @@ Class {
 		'minimumSearchSize',
 		'searchBlock'
 	],
-	#category : #'Roassal-Interaction-Controls'
+	#category : 'Roassal-Interaction-Controls',
+	#package : 'Roassal-Interaction',
+	#tag : 'Controls'
 }
 
-{ #category : #public }
+{ #category : 'public' }
 RSSearchInCanvasInteraction >> adjustRegExpIfNecessary: regExp [
 
 	^ useExactMatch ifTrue: [ regExp ] ifFalse: [ '*', regExp, '*' ]
 ]
 
-{ #category : #util }
+{ #category : 'util' }
 RSSearchInCanvasInteraction >> candidateShapes [
 	"Return shapes for which the model has to be matched.
 	 Only shapes that are not a line and having a model may be eligeable to be highligted"
@@ -43,74 +45,74 @@ RSSearchInCanvasInteraction >> candidateShapes [
 	^ canvas allChildren select: [ :child | child model notNil and: [ child isNode ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSearchInCanvasInteraction >> canvas: aCanvas [
 	"Set the canvas from which shapes should be searched in"
 	canvas := aCanvas
 ]
 
-{ #category : #'public - configuration' }
+{ #category : 'public - configuration' }
 RSSearchInCanvasInteraction >> doNotUseExactMatch [
 	"Expect a regular expression as input, but a * is prepended and appended to the regexp"
 	useExactMatch := false
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSSearchInCanvasInteraction >> initialize [
 
 	super initialize.
 	self doNotUseExactMatch.
 	self minimumSearchSize: 1.
-	self searchBlock: [ :shape :regExp | 
+	self searchBlock: [ :shape :regExp |
 		regExp match: shape model asString ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSSearchInCanvasInteraction >> isKeyForReset: evt [
 	^ evt keyName = self keyForReset
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RSSearchInCanvasInteraction >> isKeyForSearch: evt [
 	^ evt keyName = self keyForSearch and: [ evt commandKeyPressed ]
 ]
 
-{ #category : #util }
+{ #category : 'util' }
 RSSearchInCanvasInteraction >> isRegExpValid: regExp [
 	"Is the regular expression relevant to be processed"
 	^ regExp notNil and: [ regExp notEmpty ]
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 RSSearchInCanvasInteraction >> keyForReset [
 	^ 'ESCAPE'
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 RSSearchInCanvasInteraction >> keyForSearch [
 	^ 'F'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSSearchInCanvasInteraction >> minimumSearchSize [
 
 	^ minimumSearchSize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSearchInCanvasInteraction >> minimumSearchSize: anInteger [
 
 	minimumSearchSize := anInteger
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSSearchInCanvasInteraction >> onShape: aCanvas [
 	self canvas: aCanvas.
 	aCanvas searchInteraction: self.
 	aCanvas when: RSKeyUp send: #processKeyUp: to: self
 ]
 
-{ #category : #'private - events' }
+{ #category : 'private - events' }
 RSSearchInCanvasInteraction >> openSearchField [
 
 	| canvasMorph ed |
@@ -119,13 +121,13 @@ RSSearchInCanvasInteraction >> openSearchField [
 
 	ed := RubFloatingEditorBuilder new
 		      autoAccept: true;
-		      customizeEditorWith: [ :editor | 
+		      customizeEditorWith: [ :editor |
 			      editor scrollbarsShowNever.
 			      editor extent: 200 @ 30.
 			      editor position:
 					      canvasMorph positionInWorld
 					      + (canvasMorph width - editor width @ 0) ];
-		      withEditedContentsDo: [ :editedContents | 
+		      withEditedContentsDo: [ :editedContents |
 			      self searchForShapes: editedContents ];
 		      whenEditorEscapedDo: [  ].
 
@@ -133,14 +135,14 @@ RSSearchInCanvasInteraction >> openSearchField [
 	searchField := ed
 ]
 
-{ #category : #'private - events' }
+{ #category : 'private - events' }
 RSSearchInCanvasInteraction >> processKeyUp: evt [
-	
+
 	(self isKeyForSearch: evt) ifTrue: [ self openSearchField ].
 	(self isKeyForReset: evt) ifTrue: [ self resetAllHighlightedShapes ]
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSSearchInCanvasInteraction >> renderLegendOn: aLegendBuilder [
 	aLegendBuilder
 		text: 'cmd + ',self keyForSearch
@@ -150,24 +152,24 @@ RSSearchInCanvasInteraction >> renderLegendOn: aLegendBuilder [
 		description: 'Unhighlight all items'
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSSearchInCanvasInteraction >> resetAllHighlightedShapes [
 	canvas setSelectedShapes: RSGroup new.
 	canvas signalUpdate
 ]
 
-{ #category : #accessing }
-RSSearchInCanvasInteraction >> searchBlock: aBlock [ 
-	
+{ #category : 'accessing' }
+RSSearchInCanvasInteraction >> searchBlock: aBlock [
+
 	searchBlock := aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSSearchInCanvasInteraction >> searchField [
 	^ searchField
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSSearchInCanvasInteraction >> searchForShapes: regExp [
 
 	"callback called when some shapes have to be search"
@@ -175,7 +177,7 @@ RSSearchInCanvasInteraction >> searchForShapes: regExp [
 	| shapesToHighlight |
 	shapesToHighlight := self minimumSearchSize > regExp size
 		                     ifTrue: [ RSGroup new ]
-		                     ifFalse: [ 
+		                     ifFalse: [
 			                     self shapesToHighlightUsingRegExp:
 				                     (self adjustRegExpIfNecessary: regExp) ].
 
@@ -184,7 +186,7 @@ RSSearchInCanvasInteraction >> searchForShapes: regExp [
 	canvas signalUpdate
 ]
 
-{ #category : #util }
+{ #category : 'util' }
 RSSearchInCanvasInteraction >> shapesToHighlightUsingRegExp: regExp [
 
 	"Return the shapes to be highlighted"
@@ -192,13 +194,13 @@ RSSearchInCanvasInteraction >> shapesToHighlightUsingRegExp: regExp [
 	| candidateShapes shapesToHighlight matcher |
 	candidateShapes := self candidateShapes.
 	matcher := regExp asString.
-	shapesToHighlight := candidateShapes select: [ :s | 
+	shapesToHighlight := candidateShapes select: [ :s |
 		                     searchBlock value: s value: matcher ].
 
 	^ shapesToHighlight
 ]
 
-{ #category : #'public - configuration' }
+{ #category : 'public - configuration' }
 RSSearchInCanvasInteraction >> useExactMatch [
 	"Expect a regular expression as input"
 	useExactMatch := true

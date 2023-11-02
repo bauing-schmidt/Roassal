@@ -2,12 +2,14 @@
 Users can set the timer of the canvas this will affect the animations process, by changing the speed of all of them in a canvas
 "
 Class {
-	#name : #RSAbstractTimer,
-	#superclass : #RSObject,
-	#category : #'Roassal-Animation-Core'
+	#name : 'RSAbstractTimer',
+	#superclass : 'RSObject',
+	#category : 'Roassal-Animation-Core',
+	#package : 'Roassal-Animation',
+	#tag : 'Core'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSAbstractTimer class >> example [
 	| circle c animation timer |
 	circle := RSCircle new.
@@ -24,14 +26,14 @@ RSAbstractTimer class >> example [
 	timer := RSVariableTimer new.
 	c timer: timer.
 	"I can control the time :V"
-	[ 5 timesRepeat: [  
+	[ 5 timesRepeat: [
 		timer addTime: 500 milliSeconds.
-		(Delay forSeconds: 1) wait 
+		(Delay forSeconds: 1) wait
 		] ] fork.
 	^ c open
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSAbstractTimer >> currentTime [
 	^ self subclassResponsibility
 ]

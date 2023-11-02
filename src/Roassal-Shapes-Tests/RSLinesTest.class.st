@@ -2,21 +2,22 @@
 Test for all the lines of trachel
 "
 Class {
-	#name : #RSLinesTest,
-	#superclass : #RSTest,
+	#name : 'RSLinesTest',
+	#superclass : 'RSTest',
 	#instVars : [
 		'canvas'
 	],
-	#category : #'Roassal-Shapes-Tests'
+	#category : 'Roassal-Shapes-Tests',
+	#package : 'Roassal-Shapes-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 RSLinesTest >> setUp [
 	super setUp.
 	canvas := RSCanvas new
 ]
 
-{ #category : #running }
+{ #category : 'tests' }
 RSLinesTest >> testArrowedLine [
 	| line head other |
 	line := RSArrowedLine new.
@@ -41,7 +42,7 @@ RSLinesTest >> testArrowedLine [
 	self deny: other markerEnd hash equals: line markerEnd hash
 ]
 
-{ #category : #'tests - colors' }
+{ #category : 'tests - colors' }
 RSLinesTest >> testColorLineAndMarker [
 	| line |
 	line := RSShapeFactory arrowedLine.
@@ -51,7 +52,7 @@ RSLinesTest >> testColorLineAndMarker [
 		assert: line markerEnd shape borderColor equals: Color blue
 ]
 
-{ #category : #running }
+{ #category : 'tests' }
 RSLinesTest >> testDrawBezierLine [
 	canvas addShape: (RSBezier new
 		strokeColor: Color red;
@@ -59,7 +60,7 @@ RSLinesTest >> testDrawBezierLine [
 	canvas createMorph drawOnMockCanvas
 ]
 
-{ #category : #running }
+{ #category : 'tests' }
 RSLinesTest >> testDrawLine [
 	canvas addShape: (RSLine new
 		strokeColor: Color red;
@@ -67,7 +68,7 @@ RSLinesTest >> testDrawLine [
 	canvas createMorph drawOnMockCanvas
 ]
 
-{ #category : #running }
+{ #category : 'tests' }
 RSLinesTest >> testDrawMarkers [
 	| line m |
 	m := RSPolygon new
@@ -82,7 +83,47 @@ RSLinesTest >> testDrawMarkers [
 	canvas createMorph drawOnMockCanvas
 ]
 
-{ #category : #running }
+{ #category : 'tests - geometry' }
+RSLinesTest >> testEmcompassingRectangleForDiagonalLine [
+	| line |
+	line := RSLine new
+		startPoint: 0@0;
+		endPoint: 100@100;
+		width: 1;
+		yourself.
+	self assert: line encompassingRectangle extent > (100@100)
+]
+
+{ #category : 'tests - geometry' }
+RSLinesTest >> testEmcompassingRectangleForLineWithMarker [
+	| line marker |
+	marker := RSShapeFactory triangle.
+	marker size: 10.
+	marker := marker asMarker.
+	marker offset: -5.
+	line := RSLine new
+		startPoint: 0 @ 0;
+		endPoint: 0 @ 100;
+		markerEnd: marker;
+		width: 1;
+		yourself.
+	self
+		assert: line encompassingRectangle
+		closeTo: (-5 @ 0 corner: 5 @ 110)
+]
+
+{ #category : 'tests - geometry' }
+RSLinesTest >> testEmcompassingRectangleForVerticalLineWidth10 [
+	| line |
+	line := RSLine new
+		startPoint: 0@0;
+		endPoint: 0@100;
+		width: 10;
+		yourself.
+	self assert: line encompassingRectangle equals: (-5@0 corner: 5@100)
+]
+
+{ #category : 'tests' }
 RSLinesTest >> testEmptyFormat [
 	| line |
 	line := RSLine new
@@ -91,10 +132,10 @@ RSLinesTest >> testEmptyFormat [
 		yourself.
 	line format: ''.
 	self assert: line color equals: Color gray.
-	self assert: line markerStart isNil.
+	self assert: line markerStart isNil
 ]
 
-{ #category : #running }
+{ #category : 'tests' }
 RSLinesTest >> testFmt [
 	| line |
 	line := RSLine new
@@ -110,7 +151,7 @@ RSLinesTest >> testFmt [
 	self assert: line markerEnd shape color equals: line color
 ]
 
-{ #category : #running }
+{ #category : 'tests' }
 RSLinesTest >> testFormat [
 	| line |
 	line := RSLine new
@@ -127,7 +168,7 @@ RSLinesTest >> testFormat [
 	self assert: line markerEnd shape class equals: RSPolygon
 ]
 
-{ #category : #running }
+{ #category : 'tests' }
 RSLinesTest >> testFormatMarker [
 	| line markerShape|
 	line := RSLine new
@@ -142,7 +183,7 @@ RSLinesTest >> testFormatMarker [
 	self deny: line markerEnd shape class equals: markerShape
 ]
 
-{ #category : #running }
+{ #category : 'tests' }
 RSLinesTest >> testInvert [
 	| line positionBefore |
 	line := RSLine new.
@@ -150,10 +191,10 @@ RSLinesTest >> testInvert [
 	positionBefore := line position.
 	line invert.
 	self assert: line controlPoints equals: {2@0.5. 2@1.5}.
-	self assert: line position equals: positionBefore y @ positionBefore x.
+	self assert: line position equals: positionBefore y @ positionBefore x
 ]
 
-{ #category : #running }
+{ #category : 'tests' }
 RSLinesTest >> testLineIncludesPoint [
 	| line |
 	line := RSLine new
@@ -169,7 +210,7 @@ RSLinesTest >> testLineIncludesPoint [
 	self deny: (line includesPoint: 500@500)
 ]
 
-{ #category : #running }
+{ #category : 'tests' }
 RSLinesTest >> testMarkerOffset [
 	| line marker |
 	line := RSLine new
@@ -186,7 +227,7 @@ RSLinesTest >> testMarkerOffset [
 	self assert: (line includesPoint: 30@ 9)
 ]
 
-{ #category : #running }
+{ #category : 'tests' }
 RSLinesTest >> testMarkersIncludesPoint [
 	| line marker |
 	line := RSLine new
@@ -209,7 +250,7 @@ RSLinesTest >> testMarkersIncludesPoint [
 	self deny: (line includesPoint: 210@ -11)
 ]
 
-{ #category : #running }
+{ #category : 'tests' }
 RSLinesTest >> testPolylineIncludesPoint [
 	| line |
 	line := RSPolyline new.
@@ -224,7 +265,7 @@ RSLinesTest >> testPolylineIncludesPoint [
 	self deny: (line includesPoint: 6@50)
 ]
 
-{ #category : #running }
+{ #category : 'tests' }
 RSLinesTest >> testStroke [
 	| line |
 	line := RSLine new
@@ -236,5 +277,5 @@ RSLinesTest >> testStroke [
 	line format: '-.'.
 	self assert: line border dashArray equals: #(4 1 1 1).
 	line format: '.'.
-	self assert: line border dashArray equals: #(1).
+	self assert: line border dashArray equals: #(1)
 ]

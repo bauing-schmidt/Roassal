@@ -1,6 +1,6 @@
-Extension { #name : #RSPolyline }
+Extension { #name : 'RSPolyline' }
 
-{ #category : #'*Roassal-Examples' }
+{ #category : '*Roassal-Examples' }
 RSPolyline class >> exampleArrowedPolyline [
 	| line |
 	line := self new.
@@ -12,10 +12,10 @@ RSPolyline class >> exampleArrowedPolyline [
 		open
 ]
 
-{ #category : #'*Roassal-Examples' }
+{ #category : '*Roassal-Examples' }
 RSPolyline class >> examplePolyline [
 	| line |
 	line := self new.
 	line controlPoints: {0@0. 100@ -50.  0@ -100. 50@ 0}.
-	^ (Smalltalk tools inspector inspect: line) window.
+	^ (Smalltalk tools inspector inspect: line) window
 ]

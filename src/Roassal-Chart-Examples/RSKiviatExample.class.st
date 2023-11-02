@@ -2,12 +2,13 @@
 examples from RSKiviat
 "
 Class {
-	#name : #RSKiviatExample,
-	#superclass : #RSAbstractExamples,
-	#category : #'Roassal-Chart-Examples'
+	#name : 'RSKiviatExample',
+	#superclass : 'RSAbstractExamples',
+	#category : 'Roassal-Chart-Examples',
+	#package : 'Roassal-Chart-Examples'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSKiviatExample >> data [
 	^ {
 		        #( 'Sulfate' 'Nitrate' 'EC' 'OC1' 'OC2' 'OC3' 'OP' 'CO' 'O3' ).
@@ -45,7 +46,7 @@ RSKiviatExample >> data [
 				        { 0.02. 0.00. 0.18. 0.45. 0.64. 0.55. 0.86. 0.00. 0.16 } } } }
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSKiviatExample >> example01Basic [
 	<script: 'self new example01Basic open'>
 	| kiviat |
@@ -57,7 +58,7 @@ RSKiviatExample >> example01Basic [
 	^ kiviat
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSKiviatExample >> example02PolygonBackground [
 	<script: 'self new example02PolygonBackground open'>
 	| kiviat |
@@ -70,7 +71,7 @@ RSKiviatExample >> example02PolygonBackground [
 	^ kiviat
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSKiviatExample >> example03WithBorder [
 	<script: 'self new example03WithBorder open'>
 	| kiviat |
@@ -84,7 +85,7 @@ RSKiviatExample >> example03WithBorder [
 	^ kiviat
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSKiviatExample >> example04Restaurant [
 	<script: 'self new example04Restaurant open'>
 	| kiviat |
@@ -101,7 +102,7 @@ RSKiviatExample >> example04Restaurant [
 	^ kiviat
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSKiviatExample >> example05RestaurantAnimation [
 
 	<script: 'self new example05RestaurantAnimation open'>
@@ -115,46 +116,37 @@ RSKiviatExample >> example05RestaurantAnimation [
 	canvas := kiviat canvas.
 	canvas add: (animatedPolygon := RSPolygon new withBorder).
 	canvas add: (title := RSLabel new
-			          text: 'Restaurant: 1';
-			          fontSize: 15;
-			          color: 'black';
-			          position: 0 @ -250).
+		text: 'Restaurant: 1';
+		fontSize: 15;
+		color: 'black';
+		position: 0 @ -250).
 	animations := shapes collectWithIndex: [ :fromShape :index |
-		              | k toShape |
-		              k := index + 1.
-		              k > shapes size ifTrue: [ k := 1 ].
-		              toShape := shapes at: k.
+		| k toShape |
+		k := index + 1.
+		k > shapes size ifTrue: [ k := 1 ].
+		toShape := shapes at: k.
 
-		              canvas transitionAnimation
-			              duration: 3 seconds;
-			              easing: RSEasingInterpolator expIn;
-			              when: RSAnimationEndEvent
-			              do: [ :evt | title text: 'Restaurant: ' , k asString ]
-			              for: self;
-			              onStepDo: [ :t |
-				              animatedPolygon
-					              privatePoints: (fromShape points
-							               with: toShape points
-							               collect: [ :p1 :p2 | p1 interpolateTo: p2 at: t ]);
-					              resetPath;
-					              color:
-						              (fromShape color
-							               interpolateTo: toShape color
-							               at: t);
-					              position:
-						              (fromShape position
-							               interpolateTo: toShape position
-							               at: t).
-				              animatedPolygon border color:
-					              (fromShape border color
-						               interpolateTo: toShape border color
-						               at: t).
-				              canvas signalUpdate ] ].
+		canvas transitionAnimation
+			duration: 3 seconds;
+			easing: RSEasingInterpolator expIn;
+			when: RSAnimationEndEvent
+				do: [ :evt | title text: 'Restaurant: ' , k asString ]
+				for: self;
+			onStepDo: [ :t |
+				animatedPolygon
+					privatePoints: (fromShape points
+						with: toShape points
+						collect: [ :p1 :p2 | p1 interpolateTo: p2 at: t ]);
+					resetPath;
+					color: (fromShape color interpolateTo: toShape color at: t);
+					position: (fromShape position interpolateTo: toShape position at: t).
+				animatedPolygon border color: (fromShape border color interpolateTo: toShape border color at: t). ] ].
 	(canvas animationFrom: animations) repeat.
+	canvas newAnimation repeat onStepDo: [ canvas invalidate ].
 	^ kiviat canvas
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSKiviatExample >> example06Chemistry [
 	<script: 'self new example06Chemistry open'>
 	| data axisNames canvas kiviat lb |

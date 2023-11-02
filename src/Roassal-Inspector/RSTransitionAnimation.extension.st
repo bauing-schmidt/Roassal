@@ -1,10 +1,10 @@
-Extension { #name : #RSTransitionAnimation }
+Extension { #name : 'RSTransitionAnimation' }
 
-{ #category : #'*Roassal-Inspector' }
+{ #category : '*Roassal-Inspector' }
 RSTransitionAnimation >> inspectorControls [
 
 	<inspectorPresentationOrder: 0 title: 'Controls'>
 	^ SpRSTransitionInspectorPresenter new
-		  animation: self; 
+		  animation: self;
 		  yourself
 ]

@@ -46,51 +46,44 @@ c open
 
 "
 Class {
-	#name : #RSBorder,
-	#superclass : #RSObject,
+	#name : 'RSBorder',
+	#superclass : 'RSObject',
 	#instVars : [
 		'width',
 		'style',
 		'paint'
 	],
-	#category : #'Roassal-Shapes-Border'
+	#category : 'Roassal-Shapes-Border',
+	#package : 'Roassal-Shapes',
+	#tag : 'Border'
 }
 
-{ #category : #comparing }
-RSBorder >> = anObject [
-	^ self == anObject or: [
-		anObject notNil and: [
-			width = anObject width and: [
-				paint = anObject paint and: [
-					style = anObject style ] ] ] ]
-]
-
-{ #category : #visiting }
+{ #category : 'visiting' }
 RSBorder >> accept: visitor [
 	^ visitor visitBorder: self
 ]
 
-{ #category : #'style - cap' }
+{ #category : 'style - cap' }
 RSBorder >> capButt [
 	self pStyle capStyle: #capButt
 ]
 
-{ #category : #'style - cap' }
+{ #category : 'style - cap' }
 RSBorder >> capRound [
 	self pStyle capStyle: #capRound
 ]
 
-{ #category : #'style - cap' }
+{ #category : 'style - cap' }
 RSBorder >> capSquare [
 	self pStyle capStyle: #capSquare
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBorder >> color [
 	^ paint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBorder >> color: aColor [
 	"Set a color to the border. The color is provided as argument, and can be either a color object (e.g., `Color red`) or a symbol (e.g., `#yellow`)."
 	paint := aColor.
@@ -98,13 +91,13 @@ RSBorder >> color: aColor [
 	paint := Color colorFrom: aColor
 ]
 
-{ #category : #'style - dashes' }
+{ #category : 'style - dashes' }
 RSBorder >> dashArray [
 	style ifNil: [ ^ nil ].
 	^ style dashArray
 ]
 
-{ #category : #'style - dashes' }
+{ #category : 'style - dashes' }
 RSBorder >> dashArray: arrayOfNumbers [
 	"Set the pattern for the dash. For example:
 -=-=-=-=-=-=-=-=-=-=-=-=
@@ -129,12 +122,12 @@ c
 	self pStyle dashArray: arrayOfNumbers
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBorder >> dashOffset [
 	^ self pStyle dashOffset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBorder >> dashOffset: offset [
 	"Set the offset for the dash. The offset is useful when animating.
 
@@ -165,49 +158,58 @@ c
 	self pStyle dashOffset: offset
 ]
 
-{ #category : #comparing }
-RSBorder >> hash [
-	^ (width hash hashMultiply + paint hash) hashMultiply + style hash
+{ #category : 'public' }
+RSBorder >> expandPoint: p1 to: p2 [
+	| vector unit w capStyle |
+
+	style ifNil: [ ^ p1 ].
+	capStyle := style capStyle.
+	capStyle == #capButt ifTrue: [ ^ p1 ].
+	w := self width / 2.
+
+	vector := p1 - p2.
+	unit := vector / (vector r max: 1).
+	^ p1 + (unit * w)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSBorder >> initialize [
 	super initialize.
 	paint := Color gray.
 	width := 1
 ]
 
-{ #category : #'style - join' }
+{ #category : 'style - join' }
 RSBorder >> joinBevel [
 	self pStyle joinStyle: #joinBevel
 ]
 
-{ #category : #'style - join' }
+{ #category : 'style - join' }
 RSBorder >> joinMiter [
 	self pStyle joinStyle: #joinMiter
 ]
 
-{ #category : #'style - join' }
+{ #category : 'style - join' }
 RSBorder >> joinRound [
 	self pStyle joinStyle: #joinRound
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RSBorder >> pStyle [
 	^ style ifNil: [ style := RSStrokeStyle new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBorder >> paint [
 	^ paint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBorder >> paint: aPaint [
 	paint := aPaint
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RSBorder >> printOn: stream [
 	width printOn: stream.
 	stream nextPutAll: ', '.
@@ -217,22 +219,28 @@ RSBorder >> printOn: stream [
 	style printOn: stream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBorder >> style [
 	^ style
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBorder >> style: aStyle [
 	style := aStyle
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBorder >> width [
 	^ width
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
+RSBorder >> width2 [
+	"the width divided by 2 because the border is always in the center, roassal does not use something like outliers in bloc"
+	^ width / 2
+]
+
+{ #category : 'accessing' }
 RSBorder >> width: anInteger [
 	"Set the width of the border.
 

@@ -2,12 +2,14 @@
 I have the basic examples for shapes
 "
 Class {
-	#name : #RSBasicShapeExamples,
-	#superclass : #RSAbstractExamples,
-	#category : #'Roassal-Examples-Basic'
+	#name : 'RSBasicShapeExamples',
+	#superclass : 'RSAbstractExamples',
+	#category : 'Roassal-Examples-Basic',
+	#package : 'Roassal-Examples',
+	#tag : 'Basic'
 }
 
-{ #category : #'boxes and ellipses' }
+{ #category : 'boxes and ellipses' }
 RSBasicShapeExamples >> example01BasicBoxes [
 	<script: 'self new example01BasicBoxes open'>
 	| c |
@@ -23,7 +25,7 @@ RSBasicShapeExamples >> example01BasicBoxes [
 	^ c
 ]
 
-{ #category : #'boxes and ellipses' }
+{ #category : 'boxes and ellipses' }
 RSBasicShapeExamples >> example02BasicEllipses [
 	<script: 'self new example02BasicEllipses open'>
 
@@ -40,7 +42,7 @@ RSBasicShapeExamples >> example02BasicEllipses [
 	^ c
 ]
 
-{ #category : #composite }
+{ #category : 'composite' }
 RSBasicShapeExamples >> example03BasicComposite [
 	<script: 'self new example03BasicComposite open'>
 	| c com |
@@ -56,6 +58,7 @@ RSBasicShapeExamples >> example03BasicComposite [
 		extent: 100@100;
 		yourself).
 
+	com adjustToChildren.
 	c addShape: com.
 	c addShape: (RSEllipse new
 		color: (Color gray alpha: 0.4);
@@ -69,7 +72,7 @@ RSBasicShapeExamples >> example03BasicComposite [
 	^ c
 ]
 
-{ #category : #composite }
+{ #category : 'composite' }
 RSBasicShapeExamples >> example04BasicComposite [
 	<script: 'self new example04BasicComposite open'>
 	| c com |
@@ -86,6 +89,7 @@ RSBasicShapeExamples >> example04BasicComposite [
 		extent: 50@100;
 		yourself).
 
+	com adjustToChildren.
 	com position: 100@100.
 
 	c addShape: com.
@@ -100,7 +104,7 @@ RSBasicShapeExamples >> example04BasicComposite [
 	^ c
 ]
 
-{ #category : #'boxes and ellipses' }
+{ #category : 'boxes and ellipses' }
 RSBasicShapeExamples >> example05BasicGroup [
 	<script: 'self new example05BasicGroup inspect'>
 	| g |
@@ -127,11 +131,12 @@ RSBasicShapeExamples >> example05BasicGroup [
 	^ g
 ]
 
-{ #category : #labels }
+{ #category : 'labels' }
 RSBasicShapeExamples >> example06BasicLabels [
 	<script: 'self new example06BasicLabels open'>
 	| c label |
 	c := RSCanvas new.
+	c showEncompassingRectangles.
 	1 to: 12 do: [ :m |
 		| angle theta p|
 		angle := (m * 360 / 12) degreesToRadians.
@@ -162,7 +167,7 @@ RSBasicShapeExamples >> example06BasicLabels [
 	^ c
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 RSBasicShapeExamples >> example07EventsMouseMoveDrag [
 
 	<script: 'self new example07EventsMouseMoveDrag open'>
@@ -189,7 +194,7 @@ RSBasicShapeExamples >> example07EventsMouseMoveDrag [
 	^ c
 ]
 
-{ #category : #'boxes and ellipses' }
+{ #category : 'boxes and ellipses' }
 RSBasicShapeExamples >> example08EllipseBorder [
 	<script: 'self new example08EllipseBorder open'>
 	| c y r |
@@ -217,7 +222,7 @@ RSBasicShapeExamples >> example08EllipseBorder [
 	^ c
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 RSBasicShapeExamples >> example09MouseStep [
 
 	<script: 'self new example09MouseStep open'>
@@ -248,7 +253,7 @@ RSBasicShapeExamples >> example09MouseStep [
 	^ c
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 RSBasicShapeExamples >> example10EllipseMouseMove [
 
 	<script: 'self new example10EllipseMouseMove open'>
@@ -280,7 +285,7 @@ RSBasicShapeExamples >> example10EllipseMouseMove [
 	^ c
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 RSBasicShapeExamples >> example11ScaleMouseDistance [
 
 	<script: 'self new example11ScaleMouseDistance open'>
@@ -329,7 +334,7 @@ RSBasicShapeExamples >> example11ScaleMouseDistance [
 	^ c
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSBasicShapeExamples >> example12BasicLine [
 
 	<script: 'self new example12BasicLine open'>
@@ -366,7 +371,7 @@ RSBasicShapeExamples >> example12BasicLine [
 	^ c
 ]
 
-{ #category : #bitmap }
+{ #category : 'bitmap' }
 RSBasicShapeExamples >> example14BasicBitmap [
 	<script: 'self new example14BasicBitmap open'>
 
@@ -379,7 +384,7 @@ RSBasicShapeExamples >> example14BasicBitmap [
 	^ c
 ]
 
-{ #category : #'boxes and ellipses' }
+{ #category : 'boxes and ellipses' }
 RSBasicShapeExamples >> example15BasicRoundBoxes [
 	<script: 'self new example15BasicRoundBoxes open'>
 
@@ -398,7 +403,7 @@ RSBasicShapeExamples >> example15BasicRoundBoxes [
 	^ c
 ]
 
-{ #category : #border }
+{ #category : 'border' }
 RSBasicShapeExamples >> example17Borders [
 	<script: 'self new example17Borders open'>
 	| c |
@@ -424,7 +429,7 @@ RSBasicShapeExamples >> example17Borders [
 	^ c
 ]
 
-{ #category : #arcs }
+{ #category : 'arcs' }
 RSBasicShapeExamples >> example18BasicPieSlice [
 	<script: 'self new example18BasicPieSlice open'>
 	| c |
@@ -440,7 +445,7 @@ RSBasicShapeExamples >> example18BasicPieSlice [
 	^ c
 ]
 
-{ #category : #arcs }
+{ #category : 'arcs' }
 RSBasicShapeExamples >> example19PieSlice [
 	<script: 'self new example19PieSlice open'>
 	| c |
@@ -455,7 +460,7 @@ RSBasicShapeExamples >> example19PieSlice [
 	^ c
 ]
 
-{ #category : #arcs }
+{ #category : 'arcs' }
 RSBasicShapeExamples >> example20Donut [
 	<script: 'self new example20Donut open'>
 	| c |
@@ -470,7 +475,7 @@ RSBasicShapeExamples >> example20Donut [
 	^ c
 ]
 
-{ #category : #arcs }
+{ #category : 'arcs' }
 RSBasicShapeExamples >> example21CornerRadii [
 	<script: 'self new example21CornerRadii open'>
 	| c |
@@ -485,7 +490,7 @@ RSBasicShapeExamples >> example21CornerRadii [
 	^ c
 ]
 
-{ #category : #arcs }
+{ #category : 'arcs' }
 RSBasicShapeExamples >> example22BasicPieSlice [
 	<script: 'self new example22BasicPieSlice open'>
 	| c |
@@ -498,7 +503,7 @@ RSBasicShapeExamples >> example22BasicPieSlice [
 	^ c
 ]
 
-{ #category : #'boxes and ellipses' }
+{ #category : 'boxes and ellipses' }
 RSBasicShapeExamples >> example23FixedShape [
 	<script: 'self new example23FixedShape open'>
 	| c box |
@@ -519,7 +524,7 @@ RSBasicShapeExamples >> example23FixedShape [
 	^ c
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSBasicShapeExamples >> example24Polyline [
 	<script: 'self new example24Polyline open'>
 	| c |
@@ -534,7 +539,7 @@ RSBasicShapeExamples >> example24Polyline [
 	^ c
 ]
 
-{ #category : #labels }
+{ #category : 'labels' }
 RSBasicShapeExamples >> example25LabelWithBorder [
 	<script: 'self new example25LabelWithBorder open'>
 	| c |
@@ -550,7 +555,7 @@ RSBasicShapeExamples >> example25LabelWithBorder [
 	^ c
 ]
 
-{ #category : #polygons }
+{ #category : 'polygons' }
 RSBasicShapeExamples >> example26Polygon [
 
 	<script: 'self new example26Polygon open'>
@@ -576,7 +581,7 @@ RSBasicShapeExamples >> example26Polygon [
 	^ c
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSBasicShapeExamples >> example27Markers [
 	<script: 'self new example27Markers open'>
 	| c arrow axes circle dataLine |
@@ -604,7 +609,7 @@ RSBasicShapeExamples >> example27Markers [
 	^ c
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSBasicShapeExamples >> example29PolylineRadius [
 	<script: 'self new example29PolylineRadius open '>
 	| c |
@@ -617,7 +622,7 @@ RSBasicShapeExamples >> example29PolylineRadius [
 	^ c
 ]
 
-{ #category : #polygons }
+{ #category : 'polygons' }
 RSBasicShapeExamples >> example30PolygonWithRadius [
 
 	<script: 'self new example30PolygonWithRadius open'>
@@ -644,7 +649,7 @@ RSBasicShapeExamples >> example30PolygonWithRadius [
 	^ c
 ]
 
-{ #category : #'boxes and ellipses' }
+{ #category : 'boxes and ellipses' }
 RSBasicShapeExamples >> example31BorderAttachPointWithOffset [
 	<script: 'self new example31BorderAttachPointWithOffset open'>
 	| c s1 s2|
@@ -670,7 +675,7 @@ RSBasicShapeExamples >> example31BorderAttachPointWithOffset [
 	^ c
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 RSBasicShapeExamples >> example32RotateShapeByMouse [
 	<script: 'self new example32RotateShapeByMouse open'>
 	| c s |
@@ -684,7 +689,7 @@ RSBasicShapeExamples >> example32RotateShapeByMouse [
 	^ c
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSBasicShapeExamples >> example33EdgesBetweenChildren [
 	<script: 'self new example33EdgesBetweenChildren open'>
 	| c b1 b2 e1 com1 com2 |
@@ -693,7 +698,7 @@ RSBasicShapeExamples >> example33EdgesBetweenChildren [
 	com1 paint: Color blue translucent.
 	b1 := RSBox new size: 10.
 	com1 add: b1.
-	com1 adjustToChildren.
+	com1 size: 100.
 	b1 position: 20@20.
 	com1 position: 200@0.
 
@@ -701,7 +706,7 @@ RSBasicShapeExamples >> example33EdgesBetweenChildren [
 	com2 paint: Color blue translucent.
 	b2 := RSBox new size: 10.
 	com2 add: b2.
-	com2 adjustToChildren.
+	com2 size: 120.
 	b2 position: 50@0.
 	com2 position: -100@0.
 
@@ -713,7 +718,7 @@ RSBasicShapeExamples >> example33EdgesBetweenChildren [
 	^ c
 ]
 
-{ #category : #composite }
+{ #category : 'composite' }
 RSBasicShapeExamples >> example34PaletteVisualization [
 	<script: 'self new example34PaletteVisualization open'>
 	| c colors shapes compo label composites paletteObject |
@@ -748,7 +753,7 @@ RSBasicShapeExamples >> example34PaletteVisualization [
 	^ c
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 RSBasicShapeExamples >> example35KeyEvents [
 
 	<script:
@@ -762,10 +767,10 @@ RSBasicShapeExamples >> example35KeyEvents [
 		      model: 'UP';
 		      text: '';
 		      position: 0 @ 30.
-	c addAll: { 
+	c addAll: {
 			down.
 			up }.
-	print := [ :evt :s | 
+	print := [ :evt :s |
 	         s text: evt asString.
 	         evt signalUpdate ].
 	c
@@ -777,7 +782,7 @@ RSBasicShapeExamples >> example35KeyEvents [
 	^ c
 ]
 
-{ #category : #polygons }
+{ #category : 'polygons' }
 RSBasicShapeExamples >> example36PolygonAndCanvas [
 	<script: 'self new example36PolygonAndCanvas open setLabel: ''Zoom in or Zoom out'''>
 	| coords canvas int |
@@ -829,7 +834,7 @@ RSBasicShapeExamples >> example36PolygonAndCanvas [
 	^ canvas
 ]
 
-{ #category : #polygons }
+{ #category : 'polygons' }
 RSBasicShapeExamples >> example37AngleDirection [
 	<script: 'self new example37AngleDirection open setLabel: ''Angle direction in RSPieSlice'''>
 	| canvas slice magic |
@@ -883,7 +888,7 @@ RSBasicShapeExamples >> example37AngleDirection [
 	^ canvas
 ]
 
-{ #category : #shapes }
+{ #category : 'shapes' }
 RSBasicShapeExamples >> example38Interaction [
 
 	<script: 'self new example38Interaction open'>
@@ -929,7 +934,7 @@ RSBasicShapeExamples >> example38Interaction [
 	^ canvas
 ]
 
-{ #category : #shapes }
+{ #category : 'shapes' }
 RSBasicShapeExamples >> example39YikigeiAnimated [
 
 	<script: 'self new example39YikigeiAnimated open'>
@@ -955,7 +960,7 @@ RSBasicShapeExamples >> example39YikigeiAnimated [
 	^ c
 ]
 
-{ #category : #shapes }
+{ #category : 'shapes' }
 RSBasicShapeExamples >> example40ColorScale [
 	<script: 'self new example40ColorScale open'>
 	| color canvas popup shapes |
@@ -987,7 +992,7 @@ RSBasicShapeExamples >> example40ColorScale [
 	^ canvas
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSBasicShapeExamples >> example41PopupAndMarkers [
 	<script: 'self new example41PopupAndMarkers open'>
 	| line marker canvas |
@@ -1002,7 +1007,7 @@ RSBasicShapeExamples >> example41PopupAndMarkers [
 	^ canvas
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSBasicShapeExamples >> example42GhostDraggable [
 	<script: 'self new example42GhostDraggable open'>
 	| canvas b1 b2 |
@@ -1024,7 +1029,7 @@ RSBasicShapeExamples >> example42GhostDraggable [
 	^ canvas
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSBasicShapeExamples >> example43ShortestAttachPoint [
 	<script: 'self new example43ShortestAttachPoint open'>
 	| canvas numbers marker |
@@ -1067,7 +1072,7 @@ RSBasicShapeExamples >> example43ShortestAttachPoint [
 	^ canvas
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSBasicShapeExamples >> example44AA [
 
 	<script: 'self new example44AA open'>
@@ -1097,44 +1102,47 @@ RSBasicShapeExamples >> example44AA [
 	canvas newAnimation
 		repeat;
 		onStepDo: [ :t |
-			canvas shapes last text: (canvas hasAntialiasing
+			canvas shapes last text: (canvas host hasAntialiasing
 						 ifTrue: [ 'AA enabled' ]
 						 ifFalse: [ 'AA disabled' ]).
 			canvas signalUpdate ];
 		when: RSAnimationLoopEvent do: [ :evt |
-			canvas hasAntialiasing
-				ifTrue: [ canvas disableAntialiasing ]
-				ifFalse: [ canvas enableAntialiasing ].
-			canvas signalUpdate ]
+			canvas host hasAntialiasing
+				ifTrue: [ canvas host disableAntialiasing ]
+				ifFalse: [ canvas host enableAntialiasing ].
+			canvas invalidate]
 		for: self.
 	^ canvas
 ]
 
-{ #category : #lines }
-RSBasicShapeExamples >> example45ExampleRTree [
+{ #category : 'lines' }
+RSBasicShapeExamples >> example45RTree30KShapes [
 
-	<script: 'self new example45ExampleRTree open'>
+	<script: 'self new example45RTree30KShapes open'>
 	<noTest>
-	| canvas nodes |
+	| canvas nodes interaction |
 	canvas := RSCanvas new.
+	canvas host aaNone.
 	canvas useRTree.
 	nodes := ((1 to: 30000) collect: [ :i | | label |
 		label := RSLabel text: i.
 		{ label } asShape
 			model: i;
 			padding: 5;
-			color: (i even 
+			color: (i even
 				ifTrue: [Color blue translucent ]
 				ifFalse: [Color red translucent ]);
 			yourself] as: RSGroup).
 	RSGridLayout on: nodes.
 	nodes @ RSDraggable; @ RSPopup; @ RSHighlightable green.
 	canvas addAll: nodes.
-	canvas @ RSCanvasController.
+	interaction := RSCanvasController new.
+	interaction configuration shouldAnimateZoom: false.
+	canvas @ interaction.
 	^ canvas
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSBasicShapeExamples >> example46ExampleRTreeInComposites [
 
 	<script: 'self new example46ExampleRTreeInComposites open'>
@@ -1146,9 +1154,9 @@ RSBasicShapeExamples >> example46ExampleRTreeInComposites [
 		innerNodes := (1 to: 3000) collect: [ :each | | label |
 			label:= RSLabel text: each.
 			{ label } asShape
-				model: each; 
+				model: each;
 				padding: 5;
-				color: (each even 
+				color: (each even
 					ifTrue: [Color green translucent ]
 					ifFalse: [Color gray translucent ]);
 				yourself
@@ -1159,7 +1167,7 @@ RSBasicShapeExamples >> example46ExampleRTreeInComposites [
 			useRTree;
 			model: i;
 			padding: 20;
-			color: (i even 
+			color: (i even
 				ifTrue: [Color blue translucent ]
 				ifFalse: [Color red translucent ]);
 			yourself
@@ -1171,7 +1179,7 @@ RSBasicShapeExamples >> example46ExampleRTreeInComposites [
 	^ canvas
 ]
 
-{ #category : #lines }
+{ #category : 'lines' }
 RSBasicShapeExamples >> example47ExampleRTreeWithOverlapping [
 
 	<script: 'self new example47ExampleRTreeWithOverlapping inspect'>
@@ -1182,6 +1190,7 @@ RSBasicShapeExamples >> example47ExampleRTreeWithOverlapping [
 	nodes := (1 to: 10) collect: [ :i | | label |
 		label := RSLabel text: i.
 		{ label } asShape
+			model: i;
 			size: 20;
 			borderColor: Color black;
 			color: (colorScale scale: i);
@@ -1196,7 +1205,7 @@ RSBasicShapeExamples >> example47ExampleRTreeWithOverlapping [
 	^ canvas
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSBasicShapeExamples >> order [
 	^ 0
 ]

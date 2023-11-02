@@ -1,6 +1,6 @@
 Class {
-	#name : #RSAbstractBandPlotShape,
-	#superclass : #RSComposite,
+	#name : 'RSAbstractBandPlotShape',
+	#superclass : 'RSComposite',
 	#instVars : [
 		'color',
 		'bandOffset',
@@ -10,101 +10,103 @@ Class {
 		'horizontal',
 		'shouldShowBand'
 	],
-	#category : #'Roassal-Chart-Plots'
+	#category : 'Roassal-Chart-Plots',
+	#package : 'Roassal-Chart',
+	#tag : 'Plots'
 }
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSAbstractBandPlotShape >> addChildrenToComposite [
 	| shapesToRender |
 	shapesToRender := self shapesToRender.
 	self addAll: shapesToRender.
 	self adjustToChildren.
-	^ self.
+	^ self
 ]
 
-{ #category : #band }
+{ #category : 'band' }
 RSAbstractBandPlotShape >> bandOffset: aNumber [
-	bandOffset := aNumber.
+	bandOffset := aNumber
 ]
 
-{ #category : #scales }
+{ #category : 'scales' }
 RSAbstractBandPlotShape >> bandScale [
-	^ bandScale.
+	^ bandScale
 ]
 
-{ #category : #scales }
+{ #category : 'scales' }
 RSAbstractBandPlotShape >> bandScale: aNSScale [
 	bandScale := aNSScale
 ]
 
-{ #category : #band }
+{ #category : 'band' }
 RSAbstractBandPlotShape >> bandWidth: aNumber [
 	bandWidth := aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractBandPlotShape >> color [
 	^ color
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RSAbstractBandPlotShape >> color: aColor [
-	color := aColor.
+	color := aColor
 ]
 
-{ #category : #shapes }
+{ #category : 'shapes' }
 RSAbstractBandPlotShape >> computeBandRectangle [
 	^ RSPolygon new
-			points: { 
-			(bandOffset-(bandWidth/2)) @ dataScale range first. 
+			points: {
+			(bandOffset-(bandWidth/2)) @ dataScale range first.
 			(bandOffset+(bandWidth/2)) @ dataScale range first.
-			(bandOffset+(bandWidth/2)) @ dataScale range last. 
+			(bandOffset+(bandWidth/2)) @ dataScale range last.
 			(bandOffset-(bandWidth/2)) @ dataScale range last
 			};
-			color: Color blue translucent.
+			color: Color blue translucent
 ]
 
-{ #category : #shapes }
+{ #category : 'shapes' }
 RSAbstractBandPlotShape >> createShapesAndLines [
 	^ self subclassResponsibility
 ]
 
-{ #category : #scales }
+{ #category : 'scales' }
 RSAbstractBandPlotShape >> dataScale [
-	^ dataScale.
+	^ dataScale
 ]
 
-{ #category : #scales }
+{ #category : 'scales' }
 RSAbstractBandPlotShape >> dataScale: aNSScale [
 	dataScale := aNSScale
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 RSAbstractBandPlotShape >> defaultShouldShowBand [
 	^ false
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSAbstractBandPlotShape >> horizontal [
-	horizontal := true.
+	horizontal := true
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSAbstractBandPlotShape >> maxDataValue [
 	^ self subclassResponsibility
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSAbstractBandPlotShape >> minDataValue [
 	^ self subclassResponsibility
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSAbstractBandPlotShape >> renderIn: canvas [
 	^ self subclassResponsibility
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 RSAbstractBandPlotShape >> shapesToRender [
 	| shapesAndLines band |
 	shapesAndLines := self createShapesAndLines.
@@ -115,17 +117,17 @@ RSAbstractBandPlotShape >> shapesToRender [
 	^ shapesAndLines
 ]
 
-{ #category : #band }
+{ #category : 'band' }
 RSAbstractBandPlotShape >> shouldShowBand: aBoolean [
-	shouldShowBand := aBoolean.
+	shouldShowBand := aBoolean
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSAbstractBandPlotShape >> showBand [
-	self shouldShowBand: true.
+	self shouldShowBand: true
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RSAbstractBandPlotShape >> vertical [
-	horizontal := false.
+	horizontal := false
 ]

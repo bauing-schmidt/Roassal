@@ -1,9 +1,9 @@
-Extension { #name : #RSBitmap }
+Extension { #name : 'RSBitmap' }
 
-{ #category : #'*Roassal-Examples' }
+{ #category : '*Roassal-Examples' }
 RSBitmap class >> example [
 	| image |
 	image := self new.
 	image form: (self iconNamed: #pharo).
-	^ (Smalltalk tools inspector inspect: image) window.
+	^ (Smalltalk tools inspector inspect: image) window
 ]

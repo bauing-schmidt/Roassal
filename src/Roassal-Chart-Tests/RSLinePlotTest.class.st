@@ -1,15 +1,17 @@
 Class {
-	#name : #RSLinePlotTest,
-	#superclass : #RSAbstractPlotTest,
-	#category : #'Roassal-Chart-Tests-Base'
+	#name : 'RSLinePlotTest',
+	#superclass : 'RSAbstractPlotTest',
+	#category : 'Roassal-Chart-Tests-Base',
+	#package : 'Roassal-Chart-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLinePlotTest >> classToTest [
 	^ RSLinePlot
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLinePlotTest >> testDefaultValues [
 	| p |
 	p := (RSLinePlot y: #(1 2 3 4)) format: 'o-r'.
@@ -17,47 +19,47 @@ RSLinePlotTest >> testDefaultValues [
 	p xlabel: 'X label'.
 	p build.
 	self assert: p extent equals: 250 @ 200.
-	self assert: p padding equals: 5 @ 5.
+	self assert: p padding equals: 5 @ 5
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLinePlotTest >> testLineStroke [
 	| p |
 	p := RSLinePlot y: #(1 2 3 4).
-	
+
 	p format: '--'.
 	p build.
 	self assert: p border style equals: (RSStrokeStyle fromString: '--').
-	
+
 	p format: '-.'.
 	p build.
 	self assert: p border style equals: (RSStrokeStyle fromString: '-.').
-	
+
 	p format: '.'.
 	p build.
-	self assert: p border style equals: (RSStrokeStyle fromString: '.').
+	self assert: p border style equals: (RSStrokeStyle fromString: '.')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLinePlotTest >> testMarkerShape [
 	| circleMarkersPlot squareMarkersPlot |
 	circleMarkersPlot := (RSLinePlot y: #(1 2 3 4)) format: 'o-r'.
 	squareMarkersPlot := (RSLinePlot y: #(1 2 3 4)) format: 's-r'.
 	self assert: (circleMarkersPlot marker) shape class name equals: (RSShapeFactory shapeFromString: 'o') class name.
 	self deny: (circleMarkersPlot marker) shape class name equals: (RSShapeFactory shapeFromString: 's') class name.
-	self assert: (squareMarkersPlot marker) shape class name equals: (RSShapeFactory shapeFromString: 's') class name.
+	self assert: (squareMarkersPlot marker) shape class name equals: (RSShapeFactory shapeFromString: 's') class name
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLinePlotTest >> testMarkerSize [
 	| p |
 	p := (RSLinePlot y: #(1 2 3 4)) format: 'o-r'.
 	p build.
 	"Is it correct that buildChart modify and return attributes of plot?"
-	self assert: p shape markerStart shape extent equals: 4@4
+	self assert: p shape markerStart shape baseRectangle extent equals: 4@4
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLinePlotTest >> testMinMaxValue [
 
 	plot := RSLinePlot new y: #(10 13 15).
@@ -68,7 +70,7 @@ RSLinePlotTest >> testMinMaxValue [
 	self assert: plot maxValueY equals: 15
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLinePlotTest >> testPlotWithOneCollection [
 	| p window |
 	p := (RSLinePlot y: #(1 2 3 4)) format: 'o-r'.
@@ -85,7 +87,7 @@ RSLinePlotTest >> testPlotWithOneCollection [
 	self flag: 'Add title and rename format2'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLinePlotTest >> testWithWeirdValuesLine [
 
 	| values line canvas |
@@ -107,7 +109,7 @@ RSLinePlotTest >> testWithWeirdValuesLine [
 	self assert: line controlPoints size equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLinePlotTest >> testWithWeirdValuesLineWithTicks [
 
 	| values line canvas |
@@ -128,7 +130,7 @@ RSLinePlotTest >> testWithWeirdValuesLineWithTicks [
 	self assert: line controlPoints size equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RSLinePlotTest >> testWithWeirdValuesLineWithTicks2 [
 
 	| canvas labels |

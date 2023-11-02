@@ -1,21 +1,22 @@
 Class {
-	#name : #RSTranscriptCanvasMonitor,
-	#superclass : #RSAbstractCanvasMonitorInteraction,
+	#name : 'RSTranscriptCanvasMonitor',
+	#superclass : 'RSAbstractCanvasMonitorInteraction',
 	#instVars : [
 		'canvasIdString'
 	],
-	#category : #'Roassal-Interaction-Extra'
+	#category : 'Roassal-Interaction-Extra',
+	#package : 'Roassal-Interaction',
+	#tag : 'Extra'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSTranscriptCanvasMonitor >> initialize [
 
 	canvasIdString := 'RSCanvas#{1}' format: { canvas identityHash }.
-	super initialize.
-
+	super initialize
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RSTranscriptCanvasMonitor >> initializeShape [
 
 	shape := RSLabel new
@@ -23,7 +24,7 @@ RSTranscriptCanvasMonitor >> initializeShape [
 		         yourself
 ]
 
-{ #category : #update }
+{ #category : 'update' }
 RSTranscriptCanvasMonitor >> updateShape [
 	"Hacky: instead of updating the shape, we trace on the transcript."
 

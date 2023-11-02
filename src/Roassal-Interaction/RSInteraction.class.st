@@ -11,18 +11,20 @@ view @ RSDraggableView.
 
 "
 Class {
-	#name : #RSInteraction,
-	#superclass : #RSObject,
-	#category : #'Roassal-Interaction-Core'
+	#name : 'RSInteraction',
+	#superclass : 'RSObject',
+	#category : 'Roassal-Interaction-Core',
+	#package : 'Roassal-Interaction',
+	#tag : 'Core'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 RSInteraction class >> canvasExample [
 	| canvas |
 	canvas := RSCanvas new.
 	canvas background: 'veryVeryLightGray'.
 	canvas originCenterMiddle.
-		
+
 	canvas add: (RSEllipse new
 		position: 0@0;
 		extent: 10@10;
@@ -30,7 +32,7 @@ RSInteraction class >> canvasExample [
 		model: 'origin';
 		color: 'red';
 		yourself).
-		
+
 	canvas add: (RSBox new
 		position: 200@200;
 		extent: 200@200;
@@ -50,7 +52,7 @@ RSInteraction class >> canvasExample [
 	^ canvas
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RSInteraction class >> onShape: aShape [
 	| inst |
 	inst := self new.
@@ -58,7 +60,7 @@ RSInteraction class >> onShape: aShape [
 	^ inst
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 RSInteraction >> onShape: aShape [
 	self subclassResponsibility
 ]

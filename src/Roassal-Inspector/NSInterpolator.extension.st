@@ -1,6 +1,6 @@
-Extension { #name : #NSInterpolator }
+Extension { #name : 'NSInterpolator' }
 
-{ #category : #'*Roassal-Inspector' }
+{ #category : '*Roassal-Inspector' }
 NSInterpolator >> canvasForInspector [
 	| canvas theme boxes posScale rect line cp label loc s |
  	canvas := RSCanvas new.
@@ -15,7 +15,7 @@ NSInterpolator >> canvasForInspector [
 			color: (theme caretColor alpha: 0.2);
 			resetBBox;
 			yourself ] as: RSGroup.
-	
+
 	line := RSPolyline new border: (RSBorder new width: 4).
 	canvas addShape: line.
 	cp := OrderedCollection new.
@@ -73,7 +73,7 @@ NSInterpolator >> canvasForInspector [
 	^ canvas
 ]
 
-{ #category : #'*Roassal-Inspector' }
+{ #category : '*Roassal-Inspector' }
 NSInterpolator >> inspectorCanvas [
 	<inspectorPresentationOrder: 90 title: 'Canvas'>
 	^ SpRoassalInspectorPresenter new
